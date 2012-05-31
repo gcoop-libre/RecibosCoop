@@ -1,4 +1,9 @@
 Flask==0.8
 Jinja2==2.6
+WTForms==1.0.1
 Werkzeug==0.8.3
+argparse==1.2.1
+flask-peewee==0.5.3
+peewee==0.9.6
 wsgiref==0.1.2
+wtf-peewee==0.1.3
