@@ -1,0 +1,3 @@
+[submodule "pywkhtmltopdf"]
+	path = pywkhtmltopdf
+	url = git://github.com/sjkingo/pywkhtmltopdf.git
