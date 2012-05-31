@@ -6,5 +6,6 @@ Werkzeug==0.8.3
 argparse==1.2.1
 flask-peewee==0.5.3
 peewee==0.9.6
+pyPdf==1.13
 wsgiref==0.1.2
 wtf-peewee==0.1.3
