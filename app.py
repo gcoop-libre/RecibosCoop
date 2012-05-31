@@ -4,11 +4,11 @@ from pdf import to_pdf
 app = Flask(__name__)
 app.debug = True
 
-@app.route("/principal")
+@app.route("/")
 def principal():
     return render_template("principal.html")
 
-@app.route("/")
+@app.route("/to_pdf")
 @to_pdf
 def recibo():
     return render_template("recibo.html")
