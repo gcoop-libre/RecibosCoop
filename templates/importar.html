@@ -38,7 +38,13 @@
         </div><!--/span-->
         <div class="span8">
           <div class="hero-unit">
-              <a href='/importar' class='btn'>Procesar archivo</a>
+
+          <form action="/procesar" method="POST" enctype="multipart/form-data">
+              {{ form.csrf }}
+              {{ form.archivo.label }} {{ form.archivo(size=20) }}
+              <p/>
+              <input class='btn btn-primary' type='submit' value='Subir archivo'/>
+          </form>
           </div>
           <div class="row-fluid"></div><!--/row-->
         </div><!--/span-->

@@ -16,20 +16,26 @@ db = Database(app)
 auth = Auth(app, db)
 admin = Admin(app, auth)
 
-
 import models
 import forms
 
-@app.route("/", methods=("GET", "POST"))
+@app.route("/")
 def principal():
+    return render_template("principal.html")
+
+@app.route("/importar")
+def importar():
+    form = forms.EntradaForm(csrf_enabled=False)
+    return render_template("importar.html", form=form)
+
+@app.route("/procesar", methods=["POST"])
+def importar_procesar():
     form = forms.EntradaForm(csrf_enabled=False)
 
     if form.validate_on_submit():
         filename = secure_filename(form.data['archivo'].filename)
-        # filename tiene la ruta al archivo completo
-        # redirect
 
-    return render_template("principal.html", form=form)
+    return render_template("procesar.html", filename=filename)
 
 @app.route("/procesar")
 def procesar():
@@ -44,5 +50,4 @@ def recibo():
 if __name__ == "__main__":
     auth.register_admin(admin)
     admin.setup()
-
     app.run()
