@@ -3,6 +3,11 @@ from flask import render_template
 from pdf import to_pdf
 app = Flask(__name__)
 app.debug = True
+
+@app.route("/principal")
+def principal():
+    return render_template("principal.html")
+
 @app.route("/")
 @to_pdf
 def recibo():
