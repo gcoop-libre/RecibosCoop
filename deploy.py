@@ -24,6 +24,14 @@ def crear_tablas():
     admin.save()
     print "Creando al usuario administrador."
 
+def cargar_fixture_2_usuarios():
+    s1 = models.Socio()
+    s1.numero_asociado = 1
+    s1.appellido = "Grillo"
+    s1.nombre = "Pepe"
+    s1.save()
+    pass
+
 
 if __name__ == '__main__':
     crear_tablas()
