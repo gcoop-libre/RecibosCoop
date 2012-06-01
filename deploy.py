@@ -11,7 +11,7 @@ def crear_tablas():
         os.remove(DATABASE['name'])
 
     def es_un_modelo(clase):
-        return inspect.isclass(c) and issubclass(c, models.db.Model)
+        return inspect.isclass(clase) and issubclass(clase, models.db.Model)
 
     for nombre, clase in [(n, c) for n, c in inspect.getmembers(models) if es_un_modelo(c)]:
         clase.create_table(fail_silently=True)

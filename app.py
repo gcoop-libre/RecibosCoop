@@ -43,11 +43,21 @@ def procesar():
     pass
 
 @app.route("/to_pdf")
-@to_pdf
+@to_pdf(duplicate=True)
 def recibo():
     return render_template("recibo.html")
 
+@app.route("/pdf/<recibo_id>")
+def generar_recibo(recibo_id):
+    pass
+
+@app.route("/pdf/socios/<mes>")
+def generar_recibo(mes):
+    pass
+
 if __name__ == "__main__":
     auth.register_admin(admin)
+    admin.register(models.Retiro)
+    admin.register(models.Socio)
     admin.setup()
     app.run()
