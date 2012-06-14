@@ -28,5 +28,3 @@ class Retiro(db.Model):
                                         self.socio.apellido
                                         )
 
-
-

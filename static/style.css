@@ -1,2 +1,168 @@
+/*=================================
+========================= LAYOUT*/
+
 body {
+	width: 960px;
+	margin: 20px;
+	padding: 20px;
+}
+
+
+.logo {
+	clear: both;
+}
+
+#encabezado {
+	margin-bottom: 25px;
+}
+
+#recibo { 
+	padding: 5px;
+	margin-top: 10px;
+	height: 25px;
+}
+
+.recibo-left {
+	float: left;
+	margin-right: 20%;
+}
+
+.recibo-right {
+	float: right;
+}
+
+#datos {
+	height: 200px;
+	margin-bottom: 80px;
+}
+
+#datos-gcoop {
+	float: left;
+	padding-right: 30px;
+	margin-right: 30px;
+	height: 190px;
+	width: 43%;
+}
+
+#datos-asociado {
+	float: right;
+	height: 190px;
+	width: 50%;
+}
+
+#datos-gcoop div, #datos-asociado div {
+	margin-top: 10px;
+}
+
+#datos-asociado .numero-asociado, #datos-gcoop .nombre-cooperativa {
+	margin-top: 20px;
+}
+
+
+#firma {
+	clear: both;
+
+
+#firma {
+	clear: both;
+	margin: 20px 50px;
+}
+
+#firma .monto {
+	float: left;
+	width: 40%;
+}
+
+#firma .lugar-fecha {
+	width: 60%;
+	float: right;
+}
+
+#firmas {
+	clear: both;
+	margin-top: 80px;
+	text-align: center;
+	height: 30px;
+	
+}
+
+#monto-fecha {
+	margin: 40px 50px;
+	height: 30px;
+	text-align: center;
+}
+
+.firma-asociado {
+	float: left;
+	width: 40%;
+}
+
+.firma-gcoop {
+	float: right;
+	width: 40%;
+}
+
+.firma-asociado, .firma-gcoop {
+	border-top: 1px dashed #000;
+	padding-top: 10px;
+}
+
+/*=================================
+========================= ESTILO*/
+
+
+body {
+	font-family: 'Gudea', sans-serif;';
+	font-size: 16px;
+	border: 3px solid #ccc;
+}
+
+
+
+#recibo {
+	background: #ccc;
+	color: #fff;
+	font-size: 18px;
+}
+
+
+#datos-gcoop {
+	border-right: 1px solid #ccc;
+	background: url("gcoop_logo.png") no-repeat scroll 50% 0 transparent;
+	
+}
+
+
+#datos-gcoop .nombre-cooperativa {
+	font-size: 25px;
+}
+
+#datos-gcoop label, #datos-asociado label, #firma label {
+	font-weight: bold;
+}
+
+
+
+p.linea-punteada {
+	margin: 25px 0px;
+	font-size: 13px;
+	text-align: center;
+}
+
+
+#firmas {
+	
+	text-align: center;
+	
+	
+}
+
+#monto-fecha {
+	text-align: center;
+}
+
+
+.firma-asociado, .firma-gcoop {
+	border-top: 1px dashed #000;
+	
 }
