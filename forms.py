@@ -1,4 +1,5 @@
-from flaskext.wtf import Form, FileField
+from flaskext.wtf import Form, TextAreaField, Required
 
-class EntradaForm(Form):
-   archivo = FileField("Archivo")
+class ImportarForm(Form):
+    datos = TextAreaField('Datos', validators=[Required()])
+

@@ -26,7 +26,7 @@ def principal():
 
 @app.route("/importar")
 def importar():
-    form = forms.EntradaForm(csrf_enabled=False)
+    form = forms.ImportarForm(csrf_enabled=False)
     return render_template("importar.html", form=form)
 
 @app.route("/procesar", methods=["POST"])
