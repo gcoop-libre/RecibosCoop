@@ -2,6 +2,7 @@ from flask import Flask
 from flask import render_template
 from flask import redirect
 from flask import url_for
+from flask import request
 from flask_peewee.auth import Auth
 from flask_peewee.db import Database
 from flask_peewee.admin import Admin
@@ -24,9 +25,20 @@ def principal():
     retiros = models.Retiro.select()
     return render_template("principal.html", retiros=retiros)
 
-@app.route("/importar")
+@app.route("/importar", methods=["POST"])
 def importar():
-    form = forms.ImportarForm(csrf_enabled=False)
+    if request.method == 'POST':
+        form = forms.ImportarForm(request.form, csrf_enabled=False)
+
+        if form.validate():
+            # Procesar
+
+            # Tal vez con algun filtro para ver los datos recien importados?
+            return redirect(url_for('principal'))
+
+    else:
+        form = forms.ImportarForm(csrf_enabled=False)
+
     return render_template("importar.html", form=form)
 
 @app.route("/procesar", methods=["POST"])
