@@ -55,7 +55,7 @@ def procesar():
     pass
 
 @app.route("/to_pdf")
-@to_pdf(duplicate=True)
+@to_pdf()
 def recibo():
     return render_template("recibo.html")
 
@@ -72,4 +72,4 @@ if __name__ == "__main__":
     admin.register(models.Retiro)
     admin.register(models.Socio)
     admin.setup()
-    app.run()
+    app.run(processes=2)

@@ -1,0 +1,60 @@
+<div id="encabezado">
+    <div class="logo">
+        <img src="{{ url_for('static', filename='gcoop.png', _external=true) }}">
+    </div>
+
+    <div id="recibo">
+        <div class="recibo-left">
+            Recibo de anticipo de retornos a cuenta de excedentes
+        </div>
+        <div class="recibo-right">
+            N° 0001 - {{numero}} 
+        </div>
+    </div>
+</div> <!-- cierra #encabezado -->
+
+<div id="datos">
+
+    <div id="datos-gcoop">
+        <div class="nombre-cooperativa">Cooperativa de Trabajo gcoop Ltda.</div>
+        <div class="matricula-cooperativa">
+            <label>Matrícula INAES N°</label> {{matricula}}
+        </div>
+        <div class="cuit-cooperativa">
+            <label>CUIT N°</label> {{cuit}}</div>
+        <div class="domicilio-cooperativa">
+            <label>Domicilio</label> {{direccion}}
+        </div>
+
+    </div>
+
+    <div id="datos-asociado">
+        <div class="numero-asociado"><label>N° de asociado</label> {{numero_asociado}}</div>
+        <div class="nombre-asociado"><label>Apellido y Nombres</label> {{nombre_completo}}</div>
+        <div class="domicilio-asociado"><label>Domicilio</label> {{domicilio}}</div>
+        <div class="cuit-asociado"><label>CUIT N°</label> {{cuit}}</div>
+        <div class="dni-asociado"><label>DNI N°</label> {{dni}}</div>
+
+    </div>
+
+</div>
+
+<div id="firma">
+<!-- <p class="linea-punteada">&#8226; &#8226; &#8226; &#8226; &#8226; &#8226; &#8226; &#8226; &#8226; &#8226; &#8226; &#8226; &#8226; &#8226; &#8226; &#8226; &#8226; &#8226; &#8226; &#8226; &#8226; &#8226; &#8226; &#8226; &#8226; &#8226; &#8226; &#8226; &#8226; &#8226; &#8226; &#8226; &#8226; &#8226; &#8226; &#8226; &#8226; &#8226; &#8226; &#8226; &#8226; &#8226; &#8226; &#8226; &#8226; &#8226; &#8226; &#8226; &#8226; &#8226; &#8226; &#8226; &#8226; &#8226; &#8226; &#8226; &#8226; &#8226; &#8226; &#8226; &#8226; &#8226; &#8226; &#8226; &#8226; &#8226; &#8226; &#8226; &#8226; &#8226; &#8226; &#8226; &#8226; &#8226; &#8226; &#8226; &#8226; &#8226; &#8226; &#8226; &#8226; &#8226; &#8226; &#8226; &#8226; &#8226; &#8226; &#8226; &#8226; &#8226; &#8226; &#8226; &#8226; &#8226; &#8226; &#8226; &#8226; &#8226; &#8226;</p> -->
+    <p>Recibí conforme la suma de Pesos {{monto_como_cadena}} en concepto de anticipo de retornos a cuenta de excedentes por mi aporte como trabajador asociado.</p>
+
+    <div id="monto-fecha">
+    <div class="monto"><label>Son $</label> {{monto}}</div>
+    <div class="lugar-fecha"><label>Lugar y fecha</label> {{lugar}} {{fecha}}</div>
+</div>
+
+<div id="firmas">
+    <div class="firma-asociado">
+        Firma del asociado
+    </div>
+    <div class="firma-gcoop">
+        Firma p/Gcoop
+    </div>
+</div>
+
+</div>
