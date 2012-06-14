@@ -8,6 +8,12 @@ e instalar todas las dependencias:
     workon recibos
     pip install -r requirements.txt
 
+Estamos usando submodules de git. Es necarios clonar las
+dependencias:
+
+    git submodule init
+    git submodule update
+
 Una vez instaladas las dependencias, para abrir la aplicación
 tendrías que ejecutar:
 
