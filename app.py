@@ -21,7 +21,8 @@ import forms
 
 @app.route("/")
 def principal():
-    return render_template("principal.html")
+    retiros = models.Retiro.select()
+    return render_template("principal.html", retiros=retiros)
 
 @app.route("/importar")
 def importar():
