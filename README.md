@@ -14,6 +14,16 @@ dependencias:
     git submodule init
     git submodule update
 
+
+Luego tienes que iniciar la base de datos (solamente la primera
+vez)
+
+    python deploy.py
+
+
+Ejecutar
+--------
+
 Una vez instaladas las dependencias, para abrir la aplicación
 tendrías que ejecutar:
 
