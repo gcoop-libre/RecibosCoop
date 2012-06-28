@@ -32,6 +32,14 @@ def cargar_fixture_2_usuarios():
     s1.save()
     pass
 
+def cargar_fixture_socios():
+    print "Creando socio Hugo Ruscitti"
+    s1 = models.Socio(appellido="Ruscitti", nombre="Hugo")
+    s1.save()
+    s2 = models.Retiro(socio=s1, fecha="123", monto=1234.123)
+    s2.save()
+
 
 if __name__ == '__main__':
     crear_tablas()
+    cargar_fixture_socios()

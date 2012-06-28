@@ -17,14 +17,14 @@ class Socio(db.Model):
 class Retiro(db.Model):
 
     monto = DecimalField(max_digits=30, decimal_places=2)
-    fecha = DateField()
+    fecha = CharField()
     socio = ForeignKeyField(Socio, related_name="retiros")
 
     def __unicode__(self):
         return u'<Retiro %s de %s$ Socio %s %s>' % (
                                         self.fecha,
                                         self.monto,
-                                        self.socio.nombre, 
+                                        self.socio.nombre,
                                         self.socio.apellido
                                         )
 
