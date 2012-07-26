@@ -182,3 +182,28 @@ p.linea-punteada {
 	border-top: 1px dashed #000;
 	
 }
+
+
+/* PAGINA PRINCIPAL */
+div.contenido {
+    margin-top: 50px;
+}
+
+table.dataTable {
+    clear:both;
+}
+
+.dataTables_filter {
+    margin-bottom: 1em;
+}
+
+.dataTables_filter label {
+    float: none;
+}
+
+.tabs .active > a, .tabs .active > a:hover {
+    cursor: pointer;
+}
+
+
+

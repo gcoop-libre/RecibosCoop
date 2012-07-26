@@ -1,8 +1,9 @@
 {% extends 'base.html' %}
 {% block content %}
-<ul>
-    {% for retiro in retiros %}
-        <li>{{ retiro.socio.nombre }}</li>
-    {% endfor %}
-<ul>
+
+{{ javascript('jquery.dataTables.min.js')|safe }}
+{{ javascript('datatable.js')|safe }}
+
+{% include "_tabla_retiros.html" %}
+
 {% endblock %}
