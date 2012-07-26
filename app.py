@@ -71,7 +71,7 @@ def generar_recibo(retiro_id):
     retiro = models.Retiro.get(id=retiro_id)
     cooperativa = {'matricula': 12345, 'cuit': 3333, 'domicilio': 'Velasco 508'}
     traductor = Traductor()
-    monto_como_cadena = traductor.to_text(int(retiro.monto))
+    monto_como_cadena = traductor.to_text(retiro.monto)
     lugar = u"Ciudad Autónoma de Buenos Aires"
     return render_template("recibo.html", cooperativa=cooperativa, retiro=retiro, lugar=lugar, monto_como_cadena=monto_como_cadena)
 
