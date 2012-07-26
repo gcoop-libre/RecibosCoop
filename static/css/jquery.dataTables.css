@@ -1,9 +1,7 @@
-
 /*
  * Table
  */
 table.dataTable {
-    margin-top: 2em;
 }
 
 table.dataTable thead th {
@@ -21,6 +19,7 @@ table.dataTable tfoot th {
 }
 
 table.dataTable td {
+    padding: 4px;
 }
 
 table.dataTable td.center,
