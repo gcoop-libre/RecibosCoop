@@ -3,6 +3,8 @@ from functools import wraps
 from StringIO import StringIO
 import pywkhtmltopdf as pdf
 from pyPdf import PdfFileWriter, PdfFileReader
+import time
+
 
 def to_pdf(duplicate=False):
     """Decorator for Flask view functions, return current html as pdf"""
@@ -11,13 +13,17 @@ def to_pdf(duplicate=False):
         @wraps(f)
         def decorated(*args, **kwargs):
             function_return = f(*args, **kwargs)
+            print args, kwargs;
             pdf_conv = pdf.HTMLToPDFConverter()
             html_string = StringIO(function_return.encode('utf-8'))
             if duplicate:
                 encoded_pdf = duplicated_pdf(html_string)
             else:
                 encoded_pdf = pdf_conv.convert(html_string)
-            return Response(encoded_pdf, mimetype='application/pdf')
+            resp = Response(encoded_pdf, mimetype='application/pdf')
+            titulo = "Recibo_%s" % int(time.time())
+            resp.headers['Content-Disposition'] = 'attachment; filename="%s.pdf"' %titulo
+            return resp
         return decorated
     return wrap
 
