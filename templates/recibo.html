@@ -5,11 +5,10 @@
 <title>Recibo de Anticipo</title>
 
 
-
 <link rel="stylesheet" href="{{ url_for('static', filename='style.css', _external=true) }}" type="text/css" />
 <link href='http://fonts.googleapis.com/css?family=Gudea:400,700,400italic&subset=latin,latin-ext' rel='stylesheet' type='text/css'>
 
-<body>
+<body class='retiro'>
 <div class='contenedor' id='original'>
     {% include 'recibo_base.html' with context %}
 </div>

@@ -1,5 +1,4 @@
 from flaskext.wtf import Form, TextAreaField, Required
 
 class ImportarForm(Form):
-    datos = TextAreaField('Datos', validators=[Required()])
-
+    montos = TextAreaField('Montos a retirar', validators=[Required()])

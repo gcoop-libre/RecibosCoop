@@ -1,9 +1,49 @@
 {% extends 'base.html' %}
 {% block content %}
-  <form action="/importar" method="POST" enctype="multipart/form-data">
-      {{ form.csrf }}
-      {{ form.datos.label }} {{ form.datos }}
-      <p/>
-      <input class='btn btn-primary' type='submit' value='Importar'/>
-  </form>
+
+<style>
+
+textarea#nombres {
+  border: none;
+  background-color: white;
+  color: red;
+}
+
+textarea {
+  height: 400px;
+}
+
+</style>
+
+
+
+<form action="/importar" method="POST" enctype="multipart/form-data">
+  {{ form.csrf }}
+  <table>
+
+    <tr>
+      <td>
+        Nombres
+      </td>
+
+      <td>
+        {{ form.montos.label }}
+      </td>
+    </tr>
+
+    <tr>
+      <td>
+        <textarea id="nombres" readonly=readonly name="nombres">asdasd</textarea>
+      </td>
+
+      <td>
+         {{ form.montos }}
+      </td>
+    </tr>
+
+
+  </table>
+  <p/>
+  <input class='btn btn-primary' type='submit' value='Importar'/>
+</form>
 {% endblock %}
