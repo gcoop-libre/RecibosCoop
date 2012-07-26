@@ -2,11 +2,12 @@
 <html lang="en">
   <head>
     <meta charset="utf-8" />
-    <title>retiro de Anticipo</title>
+    <title>Recibos Gcoop</title>
 
     <link rel="stylesheet" href="../static/style.css" type="text/css" />
     <link rel="stylesheet" href="/static/css/bootstrap.min.css" type="text/css" />
-    <link href="/static/css/jquery.dataTables.css" rel="stylesheet" type="text/css" >
+    <link rel="stylesheet" href="/static/css/jquery.dataTables.css" type="text/css" />
+
     {{ javascript("jquery.js") | safe }}
 
   </head>
@@ -17,16 +18,11 @@
     <div class="navbar navbar-fixed-top">
       <div class="navbar-inner">
         <div class="container-fluid">
-          <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </a>
-          <a class="brand" href="#">retirosCoop</a>
+          <a class="brand" href="#">Recibos Coop</a>
 
           <div class="nav-collapse">
             <ul class="nav">
-              <li class="active"><a href="#">Principal</a></li>
+              <li><a href="/">Principal</a></li>
               <li><a href="/importar">Importar</a></li>
               <li><a href="/admin">Administrar</a></li>
             </ul>
@@ -39,12 +35,12 @@
     <div class="container-fluid">
       <div class="row-fluid">
         <div class='contenido'>
+
           <div class="span2">
           </div>
 
           <div class="span8">
             {% block content %}{% endblock %}
-            <div class="row-fluid"></div>
           </div>
 
           <div class="span2">
@@ -55,10 +51,9 @@
 
       <hr>
 
-      <footer>
-      <p>&copy; Gcoop 2012</p>
-      </footer>
+      <footer><p>© Gcoop 2012</p></footer>
 
-    </div><!--/.fluid-container-->
+
+    </div>
   </body>
 </html>

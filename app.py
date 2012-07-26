@@ -4,6 +4,7 @@ from flask import redirect
 from flask import url_for
 from flask import request
 from flask import jsonify
+
 from flask_peewee.auth import Auth
 from flask_peewee.db import Database
 from flask_peewee.admin import Admin
@@ -27,11 +28,7 @@ import forms
 def principal():
     return render_template("principal.html")
 
-@app.route("/importar")
-def retornos():
-    return "retiros"
-
-@app.route("/importar", methods=["POST"])
+@app.route("/importar", methods=["POST", "GET"])
 def importar():
     if request.method == 'POST':
         form = forms.ImportarForm(request.form, csrf_enabled=False)
