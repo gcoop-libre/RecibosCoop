@@ -2,14 +2,10 @@
 {% block content %}
 
 <style>
-
 textarea#nombres {
-  background-color: white;
   text-align: right;
   cursor: default;
-  border: none;
-  -moz-appearance:none;
-  outline: none;
+  border: 0;
   background-color: #eee;
 }
 
@@ -27,8 +23,76 @@ table {
 table td {
   margin: 5px;
 }
-
 </style>
+
+
+<script>
+
+function imprimir_mensaje(tipo, mensaje)
+{
+  $("#mensaje").html("<div class='alert alert-" + tipo + "'>" + mensaje + "</div>");
+}
+
+/**
+ * Retorna la cantidad de lineas de un textarea dado su selector.
+ * Esta función solamente cuenta las lineas que tienen texto (no vacíos).
+ */
+function cantidad_de_lineas(selector) {
+  var contenido_como_lista = $(selector).val().split('\n');
+  var cantidad = 0;
+
+  for (var i=0; i<contenido_como_lista.length; i++) {
+    if (contenido_como_lista[i])
+        cantidad += 1;
+  }
+
+  return cantidad;
+}
+
+
+/**
+ * Permite habilitar o deshabilitar el botón de la pagina.
+ */
+function habilitar_boton(estado){
+  if (estado === true) {
+    $('#importar').removeAttr('disabled');
+    $('#importar').addClass('btn-primary');
+  } else {
+    $('#importar').attr('disabled', 'false');
+    $('#importar').removeClass('btn-primary');
+  }
+}
+
+/**
+ * Se ejecuta cuando el usuario ingresa texto en la caja de montos.
+ */
+function cuando_ingresa_monto() {
+  var cantidad_de_montos = cantidad_de_lineas("#montos");
+  var cantidad_de_socios = cantidad_de_lineas("#nombres");
+
+  /* Imprime el mensaje inicial */
+  if (cantidad_de_montos === 0) {
+    imprimir_mensaje("info", "Por favor ingresa los montos en el panel de la derecha.");
+    habilitar_boton(false);
+    return;
+  }
+
+  /* Valida de todos los montos se ingresaron y son numeros válidos */
+  if (cantidad_de_socios === cantidad_de_montos) {
+    imprimir_mensaje("info", "Perfecto, ya se puede continuar.");
+    habilitar_boton(true);
+  } else {
+    imprimir_mensaje("error", "Los cantidad de montos a retirar no coinciden con la cantidad de nombres de socios.");
+    habilitar_boton(false);
+  }
+}
+
+
+$(document).ready(function() {
+  cuando_ingresa_monto();
+  $("#montos").live('keyup', cuando_ingresa_monto);
+});
+</script>
 
 
 
@@ -55,10 +119,12 @@ table td {
          {{ form.montos }}
       </td>
     </tr>
-
-
   </table>
   <p/>
-  <input class='btn btn-primary' type='submit' value='Importar'/>
+
+<div id='mensaje'>
+</div>
+
+  <button id='importar' class='btn btn-primary' type='submit'><i class="icon-ok -circle icon-white"></i> Importar </button>
 </form>
 {% endblock %}
