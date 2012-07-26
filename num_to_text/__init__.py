@@ -1,4 +1,5 @@
 #! -*- coding: utf8 -*-
+from decimal import Decimal
 
 digitos = [
         'cero',
@@ -18,6 +19,7 @@ digitos = [
         'catorce',
         'quince',
         ]
+
 decenas = [
         '',
         'diez',
@@ -30,6 +32,7 @@ decenas = [
         'ochenta',
         'noventa',
         ]
+
 centenas = [
         '',
         'ciento',
@@ -46,11 +49,11 @@ centenas = [
 exponentes = {
 #        2:'cien',
         3:'mil',
-#        6:'millon',
-#        12:'billon',
-#        24:'trillon',
-#        48:'cuatrillon', #mas exponentes agregar acá
-        }
+        6:'millon',
+        12:'billon',
+        24:'trillon',
+        48:'cuatrillon', #mas exponentes agregar acá
+    }
 
 class Traductor(object):
 
@@ -66,56 +69,82 @@ class Traductor(object):
         self.limite = 10 ** (exp*2) - 1
 
     def to_text(self, number):
+        """Interfaz publica para convertir numero a texto"""
+
+        if type(number) != Decimal:
+            number = Decimal(number)
 
         if number > self.limite:
             msg = "El maximo numero procesable es %s" % self.limite
             raise ValueError(msg)
         else:
-            return self.__to_text(number)
+            texto = self.__to_text(int(number))
+        texto += self.__calcular_decimales(number)
+
+        return texto
+
+    def __calcular_decimales(self, number):
+        dec = number.remainder_near(1)
+        if  dec != 0:
+            centavos = int(dec * 100)
+            return ' con %s/100' % centavos
+        else:
+            return ''
 
     def __to_text(self, number, indice = 0):
-            exp = self.exponentes[indice]
-            divisor = 10 ** exp
-            if divisor < number:
-                division = number / divisor
-                resto = number % divisor
-                der = self._to_text(resto)
-                if exp == 3 and division == 1: #1000
-                    return "%s %s" % (exponentes[exp], der)
-                    izq = ''
+        """Convierte un numero a texto, recursivamente"""
+
+        exp = self.exponentes[indice]
+        indice += 1
+        divisor = 10 ** exp
+        if exp == 3:
+            func = self.__numero_tres_cifras
+        else:
+            func = self.__to_text
+        if divisor < number:
+            division = number / divisor
+            resto = number % divisor
+            der = func(resto, indice)
+            if exp == 3 and division == 1: #1000
+                return "%s %s" % (exponentes[exp], der)
+                izq = ''
+            else:
+                izq = func(division, indice)
+                if division == 1:
+                    return "un %s %s" % (exponentes[exp], der)
+                elif exp > 3:
+                    return "%s %ses %s" % (izq, exponentes[exp], der)
                 else:
-                    izq = self._to_text(division)
                     return "%s %s %s" % (izq, exponentes[exp], der)
 
-            elif divisor == number:
+        elif divisor == number:
+            if exp == 3:
                 return exponentes[exp]
-
             else:
-                return self._to_text(number)
+                return 'un %s' % exponentes[exp]
 
+        else:
+            return func(number, indice)
 
+    def __numero_tres_cifras(self, number, indice=None):
+        """Convierte a texto numeros de tres cifras"""
 
-
-
-
-
-    def _to_text(self, number):
         if number <= 15:
             return digitos[number]
         elif number < 20:
-            return 'dieci%s' % self.to_text(number%10)
+            return 'dieci%s' % self.__numero_tres_cifras(number%10)
 
         elif number == 20:
             return 'veinte'
 
         elif number < 30:
-            return 'veinti%s' % self.to_text(number%10)
+            return 'veinti%s' % self.__numero_tres_cifras(number%10)
 
         elif number < 100:
             texto = decenas[number/10]
             resto = number % 10
             if resto:
-                texto += ' y %s' % self.to_text(resto)
+                texto += ' y %s' % self.__numero_tres_cifras(resto)
             return texto
 
         if number == 100:
@@ -125,7 +154,7 @@ class Traductor(object):
             texto = centenas[number/100]
             resto = number % 100
             if resto:
-                texto += ' %s' % self.to_text(resto)
+                texto += ' %s' % self.__numero_tres_cifras(resto)
             return texto
 
 
@@ -137,7 +166,7 @@ class Traductor(object):
 
 if __name__ == '__main__':
     t = Traductor()
-    print t.to_text(945)
+    print t.to_text(1000000)
 
 
 
