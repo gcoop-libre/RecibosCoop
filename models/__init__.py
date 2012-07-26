@@ -14,17 +14,21 @@ class Socio(db.Model):
     def __unicode__(self):
         return u'<Socio %s %s>' % (self.nombre, self.apellido)
 
+    def nombre_completo(self):
+        return u"%s %s" %(self.nombre, self.apellido)
+
 class Retiro(db.Model):
 
-    monto = DecimalField(max_digits=30, decimal_places=2)
-    fecha = CharField()
     socio = ForeignKeyField(Socio, related_name="retiros")
+    fecha = CharField()
+    monto = DecimalField(max_digits=30, decimal_places=2)
 
     def __unicode__(self):
-        return u'<Retiro %s de %s$ Socio %s %s>' % (
+        return u'<Retiro %s de %s$ del socio %s %s>' % (
                                         self.fecha,
                                         self.monto,
                                         self.socio.nombre,
                                         self.socio.apellido
                                         )
+
 

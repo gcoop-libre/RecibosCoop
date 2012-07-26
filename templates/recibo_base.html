@@ -18,22 +18,22 @@
     <div id="datos-gcoop">
         <div class="nombre-cooperativa">Cooperativa de Trabajo gcoop Ltda.</div>
         <div class="matricula-cooperativa">
-            <label>Matrícula INAES N°</label> {{matricula}}
+            <label>Matrícula INAES N°</label> {{cooperativa['matricula']}}
         </div>
         <div class="cuit-cooperativa">
-            <label>CUIT N°</label> {{cuit}}</div>
+            <label>CUIT N°</label> {{cooperativa['cuit']}}</div>
         <div class="domicilio-cooperativa">
-            <label>Domicilio</label> {{direccion}}
+            <label>Domicilio</label> {{cooperativa['domicilio']}}
         </div>
 
     </div>
 
     <div id="datos-asociado">
-        <div class="numero-asociado"><label>N° de asociado</label> {{numero_asociado}}</div>
-        <div class="nombre-asociado"><label>Apellido y Nombres</label> {{nombre_completo}}</div>
-        <div class="domicilio-asociado"><label>Domicilio</label> {{domicilio}}</div>
-        <div class="cuit-asociado"><label>CUIT N°</label> {{cuit}}</div>
-        <div class="dni-asociado"><label>DNI N°</label> {{dni}}</div>
+        <div class="numero-asociado"><label>N° de asociado</label> {{retiro.socio.numero_asociado}}</div>
+        <div class="nombre-asociado"><label>Apellido y Nombres</label> {{retiro.socio.nombre}} {{retiro.socio.apellido}}</div>
+        <div class="domicilio-asociado"><label>Domicilio</label> {{retiro.socio.domicilio}}</div>
+        <div class="cuit-asociado"><label>CUIT N°</label> {{retiro.socio.cuit}}</div>
+        <div class="dni-asociado"><label>DNI N°</label> {{retiro.socio.dni}}</div>
 
     </div>
 
@@ -41,11 +41,11 @@
 
 <div id="firma">
 <!-- <p class="linea-punteada">&#8226; &#8226; &#8226; &#8226; &#8226; &#8226; &#8226; &#8226; &#8226; &#8226; &#8226; &#8226; &#8226; &#8226; &#8226; &#8226; &#8226; &#8226; &#8226; &#8226; &#8226; &#8226; &#8226; &#8226; &#8226; &#8226; &#8226; &#8226; &#8226; &#8226; &#8226; &#8226; &#8226; &#8226; &#8226; &#8226; &#8226; &#8226; &#8226; &#8226; &#8226; &#8226; &#8226; &#8226; &#8226; &#8226; &#8226; &#8226; &#8226; &#8226; &#8226; &#8226; &#8226; &#8226; &#8226; &#8226; &#8226; &#8226; &#8226; &#8226; &#8226; &#8226; &#8226; &#8226; &#8226; &#8226; &#8226; &#8226; &#8226; &#8226; &#8226; &#8226; &#8226; &#8226; &#8226; &#8226; &#8226; &#8226; &#8226; &#8226; &#8226; &#8226; &#8226; &#8226; &#8226; &#8226; &#8226; &#8226; &#8226; &#8226; &#8226; &#8226; &#8226; &#8226; &#8226; &#8226; &#8226; &#8226; &#8226;</p> -->
-    <p>Recibí conforme la suma de Pesos {{monto_como_cadena}} en concepto de anticipo de retornos a cuenta de excedentes por mi aporte como trabajador asociado.</p>
+    <p>Recibí conforme la suma de Pesos <strong>{{monto_como_cadena }}</strong> en concepto de anticipo de retornos a cuenta de excedentes por mi aporte como trabajador asociado.</p>
 
     <div id="monto-fecha">
-    <div class="monto"><label>Son $</label> {{monto}}</div>
-    <div class="lugar-fecha"><label>Lugar y fecha</label> {{lugar}} {{fecha}}</div>
+    <div class="monto"><label>Son $</label> {{retiro.monto}}</div>
+    <div class="lugar-fecha"><label>Lugar y fecha</label> {{lugar}} {{retiro.fecha}}</div>
 </div>
 
 <div id="firmas">

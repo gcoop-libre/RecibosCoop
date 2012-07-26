@@ -1,3 +1,4 @@
+# -*- encoding: utf-8 -*-
 from flask import Flask
 from flask import render_template
 from flask import redirect
@@ -12,6 +13,7 @@ from werkzeug import secure_filename
 import helpers
 
 from pdf import to_pdf
+from num_to_text import Traductor
 
 app = Flask(__name__)
 app.config.from_pyfile('config.py')
@@ -65,7 +67,12 @@ def recibo():
 @app.route("/pdf/<retiro_id>")
 @to_pdf()
 def generar_recibo(retiro_id):
-    return render_template("recibo.html")
+    retiro = models.Retiro.get(id=retiro_id)
+    cooperativa = {'matricula': 12345, 'cuit': 3333, 'domicilio': 'Velasco 508'}
+    traductor = Traductor()
+    monto_como_cadena = traductor.to_text(int(retiro.monto))
+    lugar = u"Ciudad Autónoma de Buenos Aires"
+    return render_template("recibo.html", cooperativa=cooperativa, retiro=retiro, lugar=lugar, monto_como_cadena=monto_como_cadena)
 
 @app.route("/pdf/mes/<mes>")
 def generar_recibo_por_mes(mes):
@@ -88,9 +95,10 @@ def obtener_retiros():
 
 def convertir_en_formato_de_tabla(retiro):
     "Convierte un registro de datos base en una lista de celdas para una tabla."
-    nombre = retiro.socio.nombre
-    acciones = "<a href='%s'>imprimir</a>" %(url_for('generar_recibo', retiro_id=retiro.id))
-    return [nombre, acciones]
+    nombre = retiro.socio.nombre_completo()
+    acciones = "<a href='%s' class='derecha badge badge-warning'>PDF</a>" %(url_for('generar_recibo', retiro_id=retiro.id))
+    fecha = retiro.fecha
+    return [nombre, fecha, float(retiro.monto), acciones]
 
 if __name__ == "__main__":
     auth.register_admin(admin)
