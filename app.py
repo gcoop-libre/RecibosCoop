@@ -44,7 +44,8 @@ def importar():
     else:
         form = forms.ImportarForm(csrf_enabled=False)
 
-    return render_template("importar.html", form=form)
+    socios = u"\n".join([x + u"→ " for x in obtener_lista_de_socios()])
+    return render_template("importar.html", form=form, socios=socios)
 
 @app.route("/procesar", methods=["POST"])
 def importar_procesar():
@@ -93,6 +94,10 @@ def obtener_retiros():
         'iTotalRecords': total,
     })
 
+def obtener_lista_de_socios():
+    socios = models.Socio.select()
+    return [x.nombre_completo() for x in socios]
+
 def convertir_en_formato_de_tabla(retiro):
     "Convierte un registro de datos base en una lista de celdas para una tabla."
     nombre = retiro.socio.nombre_completo()
@@ -105,4 +110,4 @@ if __name__ == "__main__":
     admin.register(models.Retiro)
     admin.register(models.Socio)
     admin.setup()
-    app.run(processes=2)
+    app.run(host="0.0.0.0", processes=2)

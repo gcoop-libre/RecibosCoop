@@ -4,13 +4,28 @@
 <style>
 
 textarea#nombres {
-  border: none;
   background-color: white;
-  color: red;
+  text-align: right;
+  cursor: default;
+  border: none;
+  -moz-appearance:none;
+  outline: none;
+  background-color: #eee;
 }
 
 textarea {
-  height: 400px;
+  width: 90%;
+  height: 20em;
+  resize: none;
+
+}
+
+table {
+  width: 90%;
+}
+
+table td {
+  margin: 5px;
 }
 
 </style>
@@ -22,7 +37,7 @@ textarea {
   <table>
 
     <tr>
-      <td>
+      <td width="200px">
         Nombres
       </td>
 
@@ -33,7 +48,7 @@ textarea {
 
     <tr>
       <td>
-        <textarea id="nombres" readonly=readonly name="nombres">asdasd</textarea>
+        <textarea id="nombres" disabled=disabled name="nombres">{{socios}}</textarea>
       </td>
 
       <td>
