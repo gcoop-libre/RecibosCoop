@@ -51,6 +51,21 @@ function cantidad_de_lineas(selector) {
 
 
 /**
+ * Retorna true si todas las lineas del selector son numeros.
+ * (los espacios en blanco se interpretan como numeros).
+ */
+function solo_tiene_numeros(selector) {
+  var contenido_como_lista = $(selector).val().split('\n');
+
+  for (var i=0; i<contenido_como_lista.length; i++) {
+    if (isNaN(contenido_como_lista[i]))
+        return false;
+
+    }
+    return true;
+}
+
+/**
  * Permite habilitar o deshabilitar el botón de la pagina.
  */
 function habilitar_boton(estado){
@@ -79,8 +94,14 @@ function cuando_ingresa_monto() {
 
   /* Valida de todos los montos se ingresaron y son numeros válidos */
   if (cantidad_de_socios === cantidad_de_montos) {
-    imprimir_mensaje("info", "Perfecto, ya se puede continuar.");
-    habilitar_boton(true);
+    if (solo_tiene_numeros("#montos")) {
+      imprimir_mensaje("info", "Perfecto, ya se puede continuar.");
+      habilitar_boton(true);
+    } else {
+      imprimir_mensaje("error", "Algunos montos no se pueden convertir a numeros (¿Usaste 'comas' en lugar de 'puntos'?).");
+      habilitar_boton(false);
+    }
+
   } else {
     imprimir_mensaje("error", "Los cantidad de montos a retirar no coinciden con la cantidad de nombres de socios.");
     habilitar_boton(false);
@@ -99,6 +120,22 @@ $(document).ready(function() {
 <form action="/importar" method="POST" enctype="multipart/form-data">
   {{ form.csrf }}
   <table>
+
+    <tr>
+      <td>
+      </td>
+      <td>
+        Fecha
+      </td>
+    </tr>
+
+    <tr>
+      <td>
+      </td>
+      <td>
+         {{form.fecha}}
+      </td>
+    </tr>
 
     <tr>
       <td width="200px">
