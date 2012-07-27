@@ -79,11 +79,17 @@ class TestTraductorNumeros(unittest.TestCase):
     def test_miles(self):
         self.assertEquals(self.trad.to_text(7532), 'siete mil quinientos treinta y dos')
         self.assertEquals(self.trad.to_text(1014), 'mil catorce')
+        self.assertEquals(self.trad.to_text(21000), 'veintiun mil')
+        self.assertEquals(self.trad.to_text(71000), 'setenta y un mil')
+
         self.assertEquals(self.trad.to_text(916543), 'novecientos dieciseis mil quinientos cuarenta y tres')
 
     def test_numeros_grandes(self):
         self.assertEquals(self.trad.to_text(1000000), 'un millon');
         self.assertEquals(self.trad.to_text(1000021), 'un millon veintiuno');
+        self.assertEquals(self.trad.to_text(41000021), 'cuarenta y un millones veintiuno');
+        self.assertEquals(self.trad.to_text(41000021), 'cuarenta y un millones veintiuno');
+
         self.assertEquals(self.trad.to_text(416010015), 'cuatrocientos dieciseis millones diez mil quince');
         self.assertEquals(self.trad.to_text(1123123123123123123123123123123123456123456), 'un millon ciento veintitres mil ciento veintitres billones ciento veintitres mil ciento veintitres millones ciento veintitres mil ciento veintitres trillones ciento veintitres mil ciento veintitres millones ciento veintitres mil ciento veintitres billones ciento veintitres mil cuatrocientos cincuenta y seis millones ciento veintitres mil cuatrocientos cincuenta y seis');
 
