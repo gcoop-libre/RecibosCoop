@@ -2,6 +2,7 @@
 
 import unittest
 import num_to_text
+from decimal import Decimal
 
 class TestTraductorNumeros(unittest.TestCase):
     def setUp(self):
@@ -96,6 +97,7 @@ class TestTraductorNumeros(unittest.TestCase):
     def test_decimales(self):
         self.assertEquals(self.trad.to_text(16.1), 'dieciseis con 10/100')
         self.assertEquals(self.trad.to_text(16.321), 'dieciseis con 32/100')
+        self.assertEquals(self.trad.to_text(Decimal('1123123123123123123123123123123123456123456.33')), 'un millon ciento veintitres mil ciento veintitres billones ciento veintitres mil ciento veintitres millones ciento veintitres mil ciento veintitres trillones ciento veintitres mil ciento veintitres millones ciento veintitres mil ciento veintitres billones ciento veintitres mil cuatrocientos cincuenta y seis millones ciento veintitres mil cuatrocientos cincuenta y seis con 33/100');
 
 
 

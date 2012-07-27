@@ -1,5 +1,5 @@
 #! -*- coding: utf8 -*-
-from decimal import Decimal
+from decimal import Decimal, InvalidOperation
 
 digitos = [
         'cero',
@@ -84,7 +84,16 @@ class Traductor(object):
         return texto
 
     def __calcular_decimales(self, number):
-        dec = number.remainder_near(1)
+        try:
+            dec = number.remainder_near(1)
+        except InvalidOperation as e:
+            #Usamos strings para obtener la parte decimal
+            dec_tp = number.as_tuple()
+            if dec_tp.exponent < 0:
+                dec = Decimal('0.' + ''.join([str(n) for n in dec_tp.digits[dec_tp.exponent:]]))
+            else:
+                dec = 0
+
         if  dec != 0:
             centavos = int(dec * 100)
             return ' con %s/100' % centavos
