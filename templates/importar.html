@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
 {% block content %}
 
+<link rel="stylesheet" href="/static/css/datepicker.css" type="text/css" />
 {{ javascript("bootstrap-datepicker.js") | safe }}
 
 <style>
@@ -114,20 +115,18 @@ function cuando_ingresa_monto() {
 $(document).ready(function() {
   cuando_ingresa_monto();
   $("#montos").live('keyup', cuando_ingresa_monto);
+  $("#fecha").datepicker();
 });
 </script>
 
-
-
 <form action="/importar" method="POST" enctype="multipart/form-data">
-  {{ form.csrf }}
   <table>
 
     <tr>
       <td>
       </td>
       <td>
-        Fecha
+        {{ form.fecha.label }}
       </td>
     </tr>
 
@@ -135,7 +134,7 @@ $(document).ready(function() {
       <td>
       </td>
       <td>
-         {{form.fecha}}
+         {{form.fecha}}  <span style='color: red' class="help-inline"> {{ "<br/>".join(form.errors['fecha']) }} </span>
       </td>
     </tr>
 

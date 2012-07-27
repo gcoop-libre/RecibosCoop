@@ -33,6 +33,7 @@ def principal():
 @app.route("/importar", methods=["POST", "GET"])
 def importar():
     if request.method == 'POST':
+        print request.form
         form = forms.ImportarForm(request.form, csrf_enabled=False)
 
         if form.validate():
@@ -46,19 +47,6 @@ def importar():
 
     socios = u"\n".join([x + u"→ " for x in obtener_lista_de_socios()])
     return render_template("importar.html", form=form, socios=socios)
-
-@app.route("/procesar", methods=["POST"])
-def importar_procesar():
-    form = forms.EntradaForm(csrf_enabled=False)
-
-    if form.validate_on_submit():
-        filename = secure_filename(form.data['archivo'].filename)
-
-    return render_template("procesar.html", filename=filename)
-
-@app.route("/procesar")
-def procesar():
-    pass
 
 @app.route("/to_pdf")
 @to_pdf()
