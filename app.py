@@ -30,6 +30,14 @@ import forms
 def principal():
     return render_template("principal.html")
 
+def importar_recibos(fecha, montos):
+    socios = [socio for socio in models.Socio.select()]
+
+    for (index, monto) in enumerate(montos):
+        retiro = models.Retiro(socio=socios[index], fecha=fecha, monto=monto)
+        retiro.save()
+
+
 @app.route("/importar", methods=["POST", "GET"])
 def importar():
     if request.method == 'POST':
@@ -37,15 +45,13 @@ def importar():
         form = forms.ImportarForm(request.form, csrf_enabled=False)
 
         if form.validate():
-            # Procesar
-
-            # Tal vez con algun filtro para ver los datos recien importados?
+            importar_recibos(request.form['fecha'], request.form['montos'].strip().split("\n"))
             return redirect(url_for('principal'))
 
     else:
         form = forms.ImportarForm(csrf_enabled=False)
 
-    socios = u"\n".join([x + u"→ " for x in obtener_lista_de_socios()])
+    socios = u"\n".join([x + u" → " for x in obtener_lista_de_socios()])
     return render_template("importar.html", form=form, socios=socios)
 
 @app.route("/to_pdf")
