@@ -6,6 +6,7 @@ from flask import url_for
 from flask import request
 from flask import jsonify
 
+from peewee import Q
 from flask_peewee.auth import Auth
 from flask_peewee.db import Database
 from flask_peewee.admin import Admin
@@ -66,9 +67,19 @@ def generar_recibo(retiro_id):
 @app.route("/obtener_retiros")
 def obtener_retiros():
     retiros = models.Retiro.select()
+
+    # Parametros
+    search = request.args.get('sSearch')
+    retiros = retiros.where().join(models.Socio).where(Q(nombre__icontains=search) | Q(apellido__icontains=search))
+
+    # Aplicando limites
+    limite = int(request.args.get('iDisplayLength'))
+    desde = int(request.args.get('iDisplayStart'))
+    retiros = retiros.order_by(('fecha', 'desc')).paginate(desde/limite, limite)
+
     datos = [convertir_en_formato_de_tabla(d) for d in retiros]
     total = retiros.count()
-    # TODO: hacer un filtrado por el parametro search
+
     # TODO: contar solamentes los que resulten de una busqueda.
     total_vistos = retiros.count()
 
@@ -95,4 +106,4 @@ if __name__ == "__main__":
     admin.register(models.Retiro)
     admin.register(models.Socio)
     admin.setup()
-    app.run(host="0.0.0.0", processes=2)
+    app.run(host="0.0.0.0", port=5050, processes=1)
