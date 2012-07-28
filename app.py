@@ -64,13 +64,23 @@ def generar_recibo(retiro_id):
     lugar = u"Ciudad Autónoma de Buenos Aires"
     return render_template("recibo.html", cooperativa=retiro.socio.cooperativa, retiro=retiro, lugar=lugar, monto_como_cadena=monto_como_cadena)
 
+def parece_fecha(palabra):
+    return '/' in palabra or palabra.isdigit()
+
 @app.route("/obtener_retiros")
 def obtener_retiros():
     retiros = models.Retiro.select()
 
     # Parametros
-    search = request.args.get('sSearch')
-    retiros = retiros.where().join(models.Socio).where(Q(nombre__icontains=search) | Q(apellido__icontains=search))
+    campos_de_busqueda = request.args.get('sSearch').split(" ")
+
+    for palabra in campos_de_busqueda:
+        if parece_fecha(palabra):
+            retiros = retiros.where(fecha__icontains=palabra)
+        else:
+            condicion_de_busqueda = Q(nombre__icontains=palabra) | Q(apellido__icontains=palabra)
+            retiros = retiros.where().join(models.Socio).where(condicion_de_busqueda)
+
 
     # Aplicando limites
     limite = int(request.args.get('iDisplayLength'))
@@ -80,7 +90,6 @@ def obtener_retiros():
     datos = [convertir_en_formato_de_tabla(d) for d in retiros]
     total = retiros.count()
 
-    # TODO: contar solamentes los que resulten de una busqueda.
     total_vistos = retiros.count()
 
     return jsonify({

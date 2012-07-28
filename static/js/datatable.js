@@ -8,7 +8,7 @@ $(document).ready(function() {
     "bInfo": true,
     "bPaginate": true,
     "bSortable": false,
-    "bSort": true,
+    "bSort": false,
    
     "bServerSide": true,
     "sAjaxSource": "/obtener_retiros",
