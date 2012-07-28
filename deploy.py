@@ -4,6 +4,7 @@ import inspect
 import app
 import models
 from config import DATABASE
+import csv
 
 def crear_tablas():
     if os.path.exists(DATABASE['name']):
@@ -24,22 +25,23 @@ def crear_tablas():
     admin.save()
     print "Creando al usuario administrador."
 
-def cargar_fixture_2_usuarios():
-    s1 = models.Socio()
-    s1.numero_asociado = 1
-    s1.appellido = "Grillo"
-    s1.nombre = "Pepe"
-    s1.save()
-    pass
 
-def cargar_fixture_socios():
-    print "Creando socio Hugo Ruscitti"
-    s1 = models.Socio(apellido="Ruscitti", nombre="Hugo")
-    s1.save()
-    s2 = models.Retiro(socio=s1, fecha="123", monto=1234.123)
-    s2.save()
+def cargar_coopeativa_con_socios():
+    coop = models.Cooperativa(nombre="Gcoop", cuit='123', matricula='mat 123', domicilio='Velasco 508 (departamento A)')
+    coop.save()
+
+    socios = csv.reader(open('socios.csv', 'rb'), delimiter=',', quotechar='|')
+
+    # Se evita leer la cabecera del archivo
+    socios.next()
+
+    for s in socios:
+        registro_socio = models.Socio(apellido=s[0], nombre=s[1],
+                                      direccion=s[2], cuit=s[3],
+                                      dni=s[4], cooperativa=coop)
+        registro_socio.save()
 
 
 if __name__ == '__main__':
     crear_tablas()
-    cargar_fixture_socios()
+    cargar_coopeativa_con_socios()

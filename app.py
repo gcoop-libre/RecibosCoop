@@ -54,24 +54,14 @@ def importar():
     socios = u"\n".join([x + u" → " for x in obtener_lista_de_socios()])
     return render_template("importar.html", form=form, socios=socios)
 
-@app.route("/to_pdf")
-@to_pdf()
-def recibo():
-    return render_template("recibo.html")
-
 @app.route("/pdf/<retiro_id>")
-@to_pdf()
+#@to_pdf()
 def generar_recibo(retiro_id):
     retiro = models.Retiro.get(id=retiro_id)
-    cooperativa = {'matricula': 12345, 'cuit': 3333, 'domicilio': 'Velasco 508'}
-    traductor = Traductor()
-    monto_como_cadena = traductor.to_text(retiro.monto)
-    lugar = u"Ciudad Autónoma de Buenos Aires"
-    return render_template("recibo.html", cooperativa=cooperativa, retiro=retiro, lugar=lugar, monto_como_cadena=monto_como_cadena)
+    monto_como_cadena = Traductor().to_text(retiro.monto)
 
-@app.route("/pdf/mes/<mes>")
-def generar_recibo_por_mes(mes):
-    pass
+    lugar = u"Ciudad Autónoma de Buenos Aires"
+    return render_template("recibo.html", cooperativa=retiro.socio.cooperativa, retiro=retiro, lugar=lugar, monto_como_cadena=monto_como_cadena)
 
 @app.route("/obtener_retiros")
 def obtener_retiros():
@@ -101,6 +91,7 @@ def convertir_en_formato_de_tabla(retiro):
 
 if __name__ == "__main__":
     auth.register_admin(admin)
+    admin.register(models.Cooperativa)
     admin.register(models.Retiro)
     admin.register(models.Socio)
     admin.setup()

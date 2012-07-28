@@ -1,6 +1,15 @@
 from peewee import *
 from app import db
 
+class Cooperativa(db.Model):
+
+    cuit = CharField(max_lenght=255)
+    nombre = CharField(max_lenght=255)
+    matricula = CharField(max_lenght=255)
+    domicilio = CharField(max_lenght=255)
+
+    def __unicode__(self):
+        return u'<Cooperativa %s>' %(self.nombre)
 
 class Socio(db.Model):
 
@@ -10,6 +19,7 @@ class Socio(db.Model):
     domicilio = TextField()
     cuit = CharField(max_length=255)
     dni = CharField(max_length=255)
+    cooperativa = ForeignKeyField(Cooperativa, related_name="socios")
 
     def __unicode__(self):
         return u'<Socio %s %s>' % (self.nombre, self.apellido)
@@ -30,5 +40,4 @@ class Retiro(db.Model):
                                         self.socio.nombre,
                                         self.socio.apellido
                                         )
-
 
