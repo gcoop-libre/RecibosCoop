@@ -10,7 +10,6 @@ from peewee import Q
 from flask_peewee.auth import Auth
 from flask_peewee.db import Database
 from flask_peewee.admin import Admin
-from werkzeug import secure_filename
 import helpers
 
 from pdf import to_pdf
@@ -38,7 +37,6 @@ def importar_recibos(fecha, montos):
         retiro = models.Retiro(socio=socios[index], fecha=fecha, monto=monto)
         retiro.save()
 
-
 @app.route("/importar", methods=["POST", "GET"])
 def importar():
     if request.method == 'POST':
@@ -46,8 +44,9 @@ def importar():
         form = forms.ImportarForm(request.form, csrf_enabled=False)
 
         if form.validate():
-            importar_recibos(request.form['fecha'], request.form['montos'].strip().split("\n"))
-            return redirect(url_for('principal'))
+            fecha = request.form['fecha']
+            importar_recibos(fecha, request.form['montos'].strip().split("\n"))
+            return redirect(url_for('principal', s=fecha))
 
     else:
         form = forms.ImportarForm(csrf_enabled=False)
@@ -80,7 +79,6 @@ def obtener_retiros():
         else:
             condicion_de_busqueda = Q(nombre__icontains=palabra) | Q(apellido__icontains=palabra)
             retiros = retiros.where().join(models.Socio).where(condicion_de_busqueda)
-
 
     # Aplicando limites
     limite = int(request.args.get('iDisplayLength'))
