@@ -4,15 +4,23 @@ $(document).ready(function() {
   });
 
   $('#retiros').dataTable({
-    "bLengthChange": false,
-    "bInfo": true,
-    "bPaginate": true,
-    "bSortable": false,
-    "bSort": false,
-   
+    bLengthChange: false,
+    bInfo: true,
+    bPaginate: true,
+    bSortable: false,
+    bSort: false,
+
+    /* Traducciones */
+    oLanguage: {
+			sSearch: "Buscar:",
+			sZeroRecords: "No hay nada que mostrar",
+			sInfo: "Mostrando de _START_ a _END_ (hay _TOTAL_ registros en total)",
+			sInfoEmpty: "No hay registros que mostrar",
+			sInfoFiltered: "(filtrado de _MAX_ registros)",
+		},
+
     "bServerSide": true,
     "sAjaxSource": "/obtener_retiros",
-    "sDom": "<'row'<'span6'l><'span6'f>r>t<'row'<'span6'i><'span6'p>>",
   });
 
 
