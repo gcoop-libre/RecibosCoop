@@ -29,6 +29,7 @@ class Socio(db.Model):
 
 class Retiro(db.Model):
 
+    numero = IntegerField()
     socio = ForeignKeyField(Socio, related_name="retiros")
     fecha = CharField()
     monto = DecimalField(max_digits=30, decimal_places=2)
@@ -40,4 +41,10 @@ class Retiro(db.Model):
                                         self.socio.nombre,
                                         self.socio.apellido
                                         )
+
+    def save(self):
+        # TODO: encontrar otra forma de hacer esto, IntegerField deberia
+        #       tener un parametro autoincrement (y un numero desde donde iniciar).
+        self.numero = Retiro.select().count() + 700
+        return db.Model.save(self)
 
