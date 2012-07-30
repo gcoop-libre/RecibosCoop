@@ -35,10 +35,11 @@ def cargar_coopeativa_con_socios():
     # Se evita leer la cabecera del archivo
     socios.next()
 
-    for s in socios:
+    for (index, s) in enumerate(socios):
         registro_socio = models.Socio(apellido=s[0], nombre=s[1],
                                       direccion=s[2], cuit=s[3],
-                                      dni=s[4], cooperativa=coop)
+                                      dni=s[4], cooperativa=coop,
+                                      numero_asociado=index + 1)
         registro_socio.save()
 
 
