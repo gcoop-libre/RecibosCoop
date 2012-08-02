@@ -4,17 +4,17 @@ from pyPdf import PdfFileWriter, PdfFileReader
 
 class Pdf(object):
     """Pdf file abstraction"""
-    def __init__(self, html, filename=None):
+    def __init__(self, html=None, filename=None):
         self.htmls = []
         self.converter = html_to_pdf.HTMLToPDFConverter()
-        self.append(html)
+        if html:
+            self.append(html)
         self.render = None
 
     def get_stream(self):
         """Return encoded_pdf stream"""
         first = True
         for html in self.htmls:
-            print html
             if first:
                 out = self.to_pdf(html)
                 first = False
