@@ -23,8 +23,15 @@ db = Database(app)
 auth = Auth(app, db)
 admin = Admin(app, auth)
 
+
 import models
 import forms
+
+auth.register_admin(admin)
+admin.register(models.Cooperativa)
+admin.register(models.Retiro)
+admin.register(models.Socio)
+admin.setup()
 
 @app.route("/")
 @auth.login_required
