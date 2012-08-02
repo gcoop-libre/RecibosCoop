@@ -30,18 +30,20 @@ def cargar_coopeativa_con_socios():
     coop = models.Cooperativa(nombre="Gcoop", cuit='123', matricula='mat 123', domicilio='Velasco 508 (departamento A)')
     coop.save()
 
-    socios = csv.reader(open('socios.csv', 'rb'), delimiter=',', quotechar='|')
+    try:
+        socios = csv.reader(open('socios.csv', 'rb'), delimiter=',', quotechar='|')
 
-    # Se evita leer la cabecera del archivo
-    socios.next()
+        # Se evita leer la cabecera del archivo
+        socios.next()
 
-    for (index, s) in enumerate(socios):
-        registro_socio = models.Socio(apellido=s[0], nombre=s[1],
-                                      domicilio=s[2], cuit=s[3],
-                                      dni=s[4], cooperativa=coop,
-                                      numero_asociado=index + 1)
-        registro_socio.save()
-
+        for (index, s) in enumerate(socios):
+            registro_socio = models.Socio(apellido=s[0], nombre=s[1],
+                                          direccion=s[2], cuit=s[3],
+                                          dni=s[4], cooperativa=coop,
+                                          numero_asociado=index + 1)
+            registro_socio.save()
+    except IOError, e:
+        print "Error: no exite el archivo 'socios.csv' (vea el archivo 'tests/data/socios.csv' como ejemplo.)"
 
 if __name__ == '__main__':
     crear_tablas()

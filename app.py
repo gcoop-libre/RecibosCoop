@@ -27,6 +27,7 @@ import models
 import forms
 
 @app.route("/")
+@auth.login_required
 def principal():
     return render_template("principal.html")
 
@@ -38,6 +39,7 @@ def importar_recibos(fecha, montos):
         retiro.save()
 
 @app.route("/importar", methods=["POST", "GET"])
+@auth.login_required
 def importar():
     if request.method == 'POST':
         print request.form
@@ -55,7 +57,7 @@ def importar():
     return render_template("importar.html", form=form, socios=socios)
 
 @app.route("/pdf/<retiro_id>")
-#@to_pdf()
+@to_pdf()
 def generar_recibo(retiro_id):
     retiro = models.Retiro.get(id=retiro_id)
     monto_como_cadena = Traductor().to_text(retiro.monto)
@@ -113,4 +115,4 @@ if __name__ == "__main__":
     admin.register(models.Retiro)
     admin.register(models.Socio)
     admin.setup()
-    app.run(host="0.0.0.0", port=5050, processes=1)
+    app.run(host="0.0.0.0", port=5050, processes=2)
