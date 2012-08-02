@@ -1,9 +1,10 @@
 # -*- encoding: utf-8 -*-
+import time
 from flask import Flask
 from flask import render_template
 from flask import redirect
 from flask import url_for
-from flask import request
+from flask import request, Response
 from flask import jsonify
 
 from peewee import Q
@@ -12,7 +13,7 @@ from flask_peewee.db import Database
 from flask_peewee.admin import Admin
 import helpers
 
-from pdf import to_pdf
+from pdf import to_pdf, Pdf
 from num_to_text import Traductor
 
 app = Flask(__name__)
@@ -71,6 +72,27 @@ def generar_recibo(retiro_id):
 
     lugar = u"Ciudad Autónoma de Buenos Aires"
     return render_template("recibo.html", cooperativa=retiro.socio.cooperativa, retiro=retiro, lugar=lugar, monto_como_cadena=monto_como_cadena)
+
+@app.route("/pdf/ultimos")
+def generar_pdf_ultimos_recibos():
+    #obtener los ultimos recibos
+    to_text =Traductor().to_text
+    pdf = Pdf()
+    lugar = u"Ciudad Autónoma de Buenos Aires"
+    retiros = models.Retiro.select()
+    for retiro in retiros:
+        html = render_template("recibo.html", cooperativa=retiro.socio.cooperativa, retiro=retiro, lugar=lugar, monto_como_cadena=to_text(retiro.monto))
+        pdf.append(html)
+
+    resp = Response(pdf.get_stream(), mimetype='application/pdf')
+    titulo = "Recibos_concat_%s" % int(time.time())
+    resp.headers['Content-Disposition'] = 'attachment; filename="%s.pdf"' %titulo
+
+    return resp
+
+
+
+
 
 def parece_fecha(palabra):
     return '/' in palabra or palabra.isdigit()
