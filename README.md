@@ -26,6 +26,13 @@ dependencias:
     git submodule init
     git submodule update
 
+También se necesita un programa para generar archivos PDF desde la
+aplicación:
+
+    apt-get install wkhtmltopdf
+
+Tener en cuenta que `wkhtmltopdf` por defecto requiere X11, aunque permite
+ejecutarse desde consola con la [siguiente solución en stackoverflow][http://stackoverflow.com/questions/9604625/wkhtmltopdf-cannot-connect-to-x-server].
 
 Luego tienes que iniciar la base de datos (solamente la primera
 vez)
