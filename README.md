@@ -1,5 +1,4 @@
-Instalación
------------
+## Instalación
 
 Para instalar el sistema, es aconsejable crear un entorno
 e instalar todas las dependencias:
@@ -21,10 +20,23 @@ vez)
     python deploy.py
 
 
-Ejecutar
---------
+## Ejecutar en modo desarrollo
 
 Una vez instaladas las dependencias, para abrir la aplicación
 tendrías que ejecutar:
 
     python app.py
+
+## Ejecutar en modo producción
+
+Usamos [gunicorn][gunicorn], así que simplemente tienes que
+ejecutar el siguiente comando:
+
+    gunicorn app:app -w 4 -D
+
+Luego, para administrar los recursos de la aplicación puedes
+ejecutar:
+
+    gunicorn-console
+
+[gunicorn]: http://gunicorn.org/
