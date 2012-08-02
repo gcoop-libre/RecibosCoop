@@ -37,7 +37,7 @@ def cargar_coopeativa_con_socios():
 
     for (index, s) in enumerate(socios):
         registro_socio = models.Socio(apellido=s[0], nombre=s[1],
-                                      direccion=s[2], cuit=s[3],
+                                      domicilio=s[2], cuit=s[3],
                                       dni=s[4], cooperativa=coop,
                                       numero_asociado=index + 1)
         registro_socio.save()
