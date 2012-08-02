@@ -1,10 +1,10 @@
+import time
 from flask import Response
 from functools import wraps
 from StringIO import StringIO
-import pywkhtmltopdf as pdf
+import pywkhtmltopdf as html_to_pdf
 from pyPdf import PdfFileWriter, PdfFileReader
-import time
-
+from pdf import Pdf
 
 def to_pdf(duplicate=False):
     """Decorator for Flask view functions, return current html as pdf"""
@@ -14,7 +14,7 @@ def to_pdf(duplicate=False):
         def decorated(*args, **kwargs):
             function_return = f(*args, **kwargs)
             print args, kwargs;
-            pdf_conv = pdf.HTMLToPDFConverter()
+            pdf_conv = html_to_pdf.HTMLToPDFConverter()
             html_string = StringIO(function_return.encode('utf-8'))
             if duplicate:
                 encoded_pdf = duplicated_pdf(html_string)
@@ -32,7 +32,7 @@ def duplicated_pdf(stream):
 
     o_text = "<center><h3>-- Original --</h3></center>"
     c_text = "<center><h3>-- Duplicado --</h3></center>"
-    pdf_conv = pdf.HTMLToPDFConverter()
+    pdf_conv = html_to_pdf.HTMLToPDFConverter()
 
     original = PdfFileReader(StringIO(pdf_conv.convert(stream, o_text, o_text)))
 
@@ -53,3 +53,9 @@ def duplicated_pdf(stream):
     encoded_pdf = encoded_pdf.read()
 
     return encoded_pdf
+
+
+
+
+
+
