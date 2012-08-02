@@ -55,16 +55,13 @@ class Traductor(object):
         indice += 1
         divisor = 10 ** exp
         if exp == 3:
-            print "Usamos numero de tres cifras", sing
             func = self.__numero_tres_cifras
         else:
             func = self.__to_text
         if divisor < number:
             division = number / divisor
             resto = number % divisor
-            print division, resto
             if resto:
-                print "Voy por la derecha", func
                 der = func(resto, indice, sing)
             else:
                 der = False
@@ -72,9 +69,7 @@ class Traductor(object):
             if exp == 3 and division == 1: #1000
                 return "%s %s" % (exponentes[exp], der)
             else:
-                print "calculo izquierda" , func
                 izq = func(division, indice, True)
-                print izq, der
                 if der:
                     if division == 1:
                         return "un %s %s" % (exponentes[exp], der)
@@ -102,7 +97,6 @@ class Traductor(object):
 
     def __numero_tres_cifras(self, number, indice=None, sing=False):
         """Convierte a texto numeros de tres cifras"""
-        print number, indice, None
         if sing and number == 1:
             return 'un'
         elif number <= 15:
@@ -115,10 +109,7 @@ class Traductor(object):
             return 'veinte'
 
         elif number < 30:
-            print sing
-            a = 'veinti%s' % self.__numero_tres_cifras(number%10, None, sing)
-            print a
-            return a
+            return 'veinti%s' % self.__numero_tres_cifras(number%10, None, sing)
 
         elif number < 100:
             texto = decenas[number/10]
