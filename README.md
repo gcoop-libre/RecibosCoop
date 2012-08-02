@@ -1,3 +1,16 @@
+# RecibosCoop
+
+RecibosCoop es una aplicación web muy sencilla. Nos permite simplificar
+la elaboración e impresión de recibos en nuestra cooperativa de trabajo:
+
+![](https://raw.github.com/gcoop-libre/RecibosCoop/master/images/screen.png)
+
+Por cada recibo dentro de la aplicación existe la opción de obtener un
+archivo PDF listo para imprimir:
+
+![](https://raw.github.com/gcoop-libre/RecibosCoop/master/images/lista.png)
+
+
 ## Instalación
 
 Para instalar el sistema, es aconsejable crear un entorno
