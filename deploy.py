@@ -27,8 +27,19 @@ def crear_tablas():
 
 
 def cargar_coopeativa_con_socios():
-    coop = models.Cooperativa(nombre="Gcoop", cuit='123', matricula='mat 123', domicilio='Velasco 508 (departamento A)')
-    coop.save()
+    try:
+        cooperativas = csv.reader(open('cooperativas.csv', 'rb'), delimiter=',', quotechar='|')
+
+        # Se evita leer la cabecera del archivo
+        cooperativas.next()
+
+        for (index, s) in enumerate(cooperativas):
+            registro_coop = models.Cooperativa(nombre=s[0], cuit=s[1],
+                                      matricula=s[2], domicilio=s[3])
+            registro_coop.save()
+            print u"Importando cooperativa: %s" %(registro_coop)
+    except IOError, e:
+        print "Error: no exite el archivo 'cooperativas.csv' (vea el archivo 'tests/data/cooperativas.csv' como ejemplo.)"
 
     try:
         socios = csv.reader(open('socios.csv', 'rb'), delimiter=',', quotechar='|')
@@ -39,9 +50,10 @@ def cargar_coopeativa_con_socios():
         for (index, s) in enumerate(socios):
             registro_socio = models.Socio(apellido=s[0], nombre=s[1],
                                           direccion=s[2], cuit=s[3],
-                                          dni=s[4], cooperativa=coop,
+                                          dni=s[4], cooperativa=registro_coop,
                                           numero_asociado=index + 1)
             registro_socio.save()
+            print u"Importando socio: %s" %(registro_socio)
     except IOError, e:
         print "Error: no exite el archivo 'socios.csv' (vea el archivo 'tests/data/socios.csv' como ejemplo.)"
 
