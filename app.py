@@ -51,7 +51,6 @@ def importar_recibos(fecha, montos):
 @auth.login_required
 def importar():
     if request.method == 'POST':
-        print request.form
         form = forms.ImportarForm(request.form, csrf_enabled=False)
 
         if form.validate():
