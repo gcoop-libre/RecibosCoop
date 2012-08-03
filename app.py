@@ -29,10 +29,11 @@ import models
 import forms
 
 auth.register_admin(admin)
-admin.register(models.Cooperativa)
 admin.register(models.Retiro)
 admin.register(models.Socio)
+admin.register(models.Cooperativa)
 admin.setup()
+
 
 @app.route("/")
 @auth.login_required
@@ -139,9 +140,4 @@ def convertir_en_formato_de_tabla(retiro):
     return [nombre, fecha, float(retiro.monto), acciones]
 
 if __name__ == "__main__":
-    auth.register_admin(admin)
-    admin.register(models.Cooperativa)
-    admin.register(models.Retiro)
-    admin.register(models.Socio)
-    admin.setup()
     app.run(host="0.0.0.0", port=5050, processes=2)
