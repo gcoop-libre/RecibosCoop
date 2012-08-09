@@ -69,13 +69,14 @@ def generar_recibo(retiro_id):
     return render_template("recibo.html", cooperativa=retiro.socio.cooperativa, retiro=retiro, monto_como_cadena=monto_como_cadena)
 
 
-@app.route("/pdf/ultimos")
+@app.route("/pdf_concatenado", methods=["POST"])
 @auth.login_required
-def generar_pdf_ultimos_recibos():
-    #obtener los ultimos recibos
+def generar_pdf_concatenado():
+
+    id_retiros = request.form.to_dict(False).get('recibo')
     to_text =Traductor().to_text
     pdf = Pdf()
-    retiros = models.Retiro.select()
+    retiros = models.Retiro.select().where(id__in = id_retiros)
     for retiro in retiros:
         html = render_template("recibo.html", cooperativa=retiro.socio.cooperativa, retiro=retiro, monto_como_cadena=to_text(retiro.monto))
         pdf.append(html)
@@ -128,9 +129,10 @@ def obtener_lista_de_socios():
 def convertir_en_formato_de_tabla(retiro):
     "Convierte un registro de datos base en una lista de celdas para una tabla."
     nombre = retiro.socio.nombre_completo()
+    check = '<input class="centrar selector_recibo" type="checkbox" name="recibo" value="%s">' % retiro.id
     acciones = "<a href='%s' class='derecha badge badge-warning'>PDF</a>" %(url_for('generar_recibo', retiro_id=retiro.id))
     fecha = retiro.fecha
-    return [nombre, fecha, float(retiro.monto), acciones]
+    return [check, nombre, fecha, float(retiro.monto), acciones]
 
 def registrar_modelos(admin, models):
     auth.register_admin(admin)

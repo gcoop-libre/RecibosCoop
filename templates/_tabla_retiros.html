@@ -1,6 +1,41 @@
+<script type="text/javascript">
+  $(document).ready(
+      function setup_form(){
+        function cambio_checkbox(){
+            if (this.checked){
+                $('.selector_recibo').attr('checked', true);
+            } else { 
+                $('.selector_recibo').attr('checked', false);
+            }
+        }
+        
+        function cambio_checkbox_recibo()
+        {
+            if (!this.checked){
+                $('#seleccionar_todos').attr('checked', false);
+            }
+        }
+
+        $('.selector_recibo').each(function(id){
+            console.log(this);
+            $(this).change(cambio_checkbox_recibo);
+          });  
+        
+        $('#seleccionar_todos').change(cambio_checkbox);  
+      });
+
+
+</script>
+
+<form id="formulario_recibos" action={{ url_for('generar_pdf_concatenado') }} method="POST">
 <table cellpadding="0" cellspacing="0" border="0" class="table table-striped table-bordered" id="retiros">
     <thead>
         <tr>
+            <th class='centrar'>
+              <input id="seleccionar_todos" type="checkbox" 
+              name="seleccionar_todos" value="">
+              <input type='submit' class="badge badge-warning" value="PDF"/>
+            </th>
             <th>Nombre completo</th>
             <th>Fecha</th>
             <th>Monto</th>
@@ -10,4 +45,6 @@
 
     <tbody>
     </tbody>
-</table>
+  </table>
+<form>
+
