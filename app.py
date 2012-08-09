@@ -28,12 +28,6 @@ admin = Admin(app, auth)
 import models
 import forms
 
-auth.register_admin(admin)
-admin.register(models.Retiro)
-admin.register(models.Socio)
-admin.register(models.Cooperativa)
-admin.setup()
-
 
 @app.route("/")
 @auth.login_required
@@ -138,5 +132,20 @@ def convertir_en_formato_de_tabla(retiro):
     fecha = retiro.fecha
     return [nombre, fecha, float(retiro.monto), acciones]
 
-if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=5050, processes=2)
+def registrar_modelos(admin, models):
+    auth.register_admin(admin)
+
+    for m in ['Retiro', 'Socio', 'Cooperativa']:
+        modelo = getattr(models, m, None)
+
+        if modelo:
+            admin.register(modelo)
+
+    admin.setup()
+
+
+if __name__ == '__main__':
+    registrar_modelos(admin, models)
+    app.run(host="0.0.0.0", port=5000, processes=2)
+else:
+    registrar_modelos(admin, models)
