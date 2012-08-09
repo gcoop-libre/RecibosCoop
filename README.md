@@ -1,15 +1,21 @@
 # RecibosCoop
 
-RecibosCoop es una aplicación web muy sencilla. Nos permite simplificar
-la elaboración e impresión de recibos en nuestra cooperativa de trabajo:
+RecibosCoop es una aplicación web muy sencilla, permite simplificar
+la elaboración e impresión de recibos en una cooperativa de trabajo:
 
 ![](https://raw.github.com/gcoop-libre/RecibosCoop/master/images/screen.png)
 
-Por cada recibo dentro de la aplicación existe la opción de obtener un
-archivo PDF listo para imprimir:
+Cada recibo cargado en la aplicación se puede exportar cómo un archivo pdf:
 
 ![](https://raw.github.com/gcoop-libre/RecibosCoop/master/images/lista.png)
 
+El recibo se genera con dos copias en la misma hoja A4, para que se pueda
+imprimir y firmar:
+
+![](https://raw.github.com/gcoop-libre/RecibosCoop/master/images/recibo.png)
+
+Este software se desarrolló dentro de la cooperativa Gcoop, pero se puede adaptar
+fácilmente para que sea de utilidad a otras cooperativas.
 
 ## Instalación
 
@@ -35,9 +41,12 @@ Tener en cuenta que `wkhtmltopdf` por defecto requiere X11, aunque permite
 ejecutarse desde consola con la [siguiente solución en stackoverflow][http://stackoverflow.com/questions/9604625/wkhtmltopdf-cannot-connect-to-x-server].
 
 Luego tienes que iniciar la base de datos (solamente la primera
-vez)
+vez):
 
     python deploy.py
+
+Incluimos unos archivos llamados 'socios.csv' y 'cooperativa.csv' de ejemplo
+para agilizar la carga de datos inicial.
 
 
 ## Ejecutar en modo desarrollo
