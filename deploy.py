@@ -51,7 +51,7 @@ def cargar_coopeativa_con_socios():
             registro_socio = models.Socio(apellido=s[0], nombre=s[1],
                                           domicilio=s[2], cuit=s[3],
                                           dni=s[4], cooperativa=registro_coop,
-                                          numero_asociado=index + 1)
+                                          numero_asociado=s[5])
             registro_socio.save()
             print u"Importando socio: %s" %(registro_socio)
     except IOError, e:

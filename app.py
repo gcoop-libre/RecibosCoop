@@ -122,7 +122,7 @@ def obtener_retiros():
     })
 
 def obtener_lista_de_socios():
-    socios = models.Socio.select()
+    socios = models.Socio.select().order_by('numero_asociado')
     return [x.nombre_completo() for x in socios]
 
 def convertir_en_formato_de_tabla(retiro):
