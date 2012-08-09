@@ -58,7 +58,9 @@ def importar():
     socios = u"\n".join([x + u" → " for x in obtener_lista_de_socios()])
     return render_template("importar.html", form=form, socios=socios)
 
+
 @app.route("/pdf/<retiro_id>")
+@auth.login_required
 @to_pdf()
 def generar_recibo(retiro_id):
     retiro = models.Retiro.get(id=retiro_id)
@@ -66,7 +68,9 @@ def generar_recibo(retiro_id):
 
     return render_template("recibo.html", cooperativa=retiro.socio.cooperativa, retiro=retiro, monto_como_cadena=monto_como_cadena)
 
+
 @app.route("/pdf/ultimos")
+@auth.login_required
 def generar_pdf_ultimos_recibos():
     #obtener los ultimos recibos
     to_text =Traductor().to_text
@@ -83,11 +87,9 @@ def generar_pdf_ultimos_recibos():
     return resp
 
 
-
-
-
 def parece_fecha(palabra):
     return '/' in palabra or palabra.isdigit()
+
 
 @app.route("/obtener_retiros")
 def obtener_retiros():
