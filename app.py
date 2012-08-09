@@ -64,18 +64,16 @@ def generar_recibo(retiro_id):
     retiro = models.Retiro.get(id=retiro_id)
     monto_como_cadena = Traductor().to_text(retiro.monto)
 
-    lugar = u"Ciudad Autónoma de Buenos Aires"
-    return render_template("recibo.html", cooperativa=retiro.socio.cooperativa, retiro=retiro, lugar=lugar, monto_como_cadena=monto_como_cadena)
+    return render_template("recibo.html", cooperativa=retiro.socio.cooperativa, retiro=retiro, monto_como_cadena=monto_como_cadena)
 
 @app.route("/pdf/ultimos")
 def generar_pdf_ultimos_recibos():
     #obtener los ultimos recibos
     to_text =Traductor().to_text
     pdf = Pdf()
-    lugar = u"Ciudad Autónoma de Buenos Aires"
     retiros = models.Retiro.select()
     for retiro in retiros:
-        html = render_template("recibo.html", cooperativa=retiro.socio.cooperativa, retiro=retiro, lugar=lugar, monto_como_cadena=to_text(retiro.monto))
+        html = render_template("recibo.html", cooperativa=retiro.socio.cooperativa, retiro=retiro, monto_como_cadena=to_text(retiro.monto))
         pdf.append(html)
 
     resp = Response(pdf.get_stream(), mimetype='application/pdf')

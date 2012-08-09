@@ -1,6 +1,6 @@
 <div id="encabezado">
     <div class="logo">
-        <img src="{{ url_for('static', filename='gcoop.png', _external=true) }}">
+        <img src="{{ url_for('static', filename='logo.png', _external=true) }}">
     </div>
 
     <div id="recibo">
@@ -16,7 +16,7 @@
 <div id="datos">
 
     <div id="datos-gcoop">
-        <div class="nombre-cooperativa">Cooperativa de Trabajo gcoop Ltda.</div>
+      <div class="nombre-cooperativa"> {{cooperativa['nombre']}}</div>
         <div class="matricula-cooperativa">
             <label>Matrícula INAES N°</label> {{cooperativa['matricula']}}
         </div>
@@ -45,7 +45,7 @@
 
     <div id="monto-fecha">
     <div class="monto"><label>Son $</label> {{retiro.monto}}</div>
-    <div class="lugar-fecha"><label>Lugar y fecha</label> {{lugar}} {{retiro.fecha}}</div>
+    <div class="lugar-fecha"><label>Lugar y fecha</label> {{cooperativa['lugar_firma']}} {{retiro.fecha}}</div>
 </div>
 
 <div id="firmas">
@@ -53,7 +53,7 @@
         Firma del asociado
     </div>
     <div class="firma-gcoop">
-        Firma p/Gcoop
+      Firma p/{{ cooperativa['nombre_corto']}}
     </div>
 </div>
 

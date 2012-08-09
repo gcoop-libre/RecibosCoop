@@ -7,6 +7,8 @@ class Cooperativa(db.Model):
     nombre = CharField(max_lenght=255)
     matricula = CharField(max_lenght=255)
     domicilio = CharField(max_lenght=255)
+    lugar_firma = CharField(max_lenght=255)
+    nombre_corto = CharField(max_lenght=255)
 
     def __unicode__(self):
         return u'<Cooperativa %s>' %(self.nombre)
