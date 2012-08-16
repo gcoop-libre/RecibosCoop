@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <meta charset="utf-8" />
+    <meta http-equiv="Content-Type" content="textxt/html" charset="UTF-8" />
     <title>Recibos Gcoop</title>
 
     <link rel="stylesheet" href="/static/style.css" type="text/css" />
@@ -54,7 +54,7 @@
                     {% for category, message in messages %}
                     <div class="alert alert-block alert-{{ category }}">
                       <a class="close" href="#" data-dismiss="alert">×</a>
-                      <p>{{ message }}</p>
+                      <p>{{ message | safe }}</p>
                     </div>
                     {% endfor %}
                 {% endif %}

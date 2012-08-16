@@ -1,17 +1,14 @@
-# -*- encoding: utf-8 -*-
+# -*- coding: utf-8 -*-
+
+import helpers
 import time
-from flask import Flask
-from flask import render_template
-from flask import redirect
-from flask import url_for
-from flask import request, Response
-from flask import jsonify
+
+from flask import Flask, render_template, redirect, url_for, request, Response, jsonify, flash
 
 from peewee import Q
 from flask_peewee.auth import Auth
 from flask_peewee.db import Database
 from flask_peewee.admin import Admin
-import helpers
 
 from pdf import to_pdf, Pdf
 from num_to_text import Traductor
@@ -40,6 +37,7 @@ def importar_recibos(fecha, montos):
     for (index, monto) in enumerate(montos):
         retiro = models.Retiro(socio=socios[index], fecha=fecha, monto=monto)
         retiro.save()
+
 
 @app.route("/importar", methods=["POST", "GET"])
 @auth.login_required
@@ -74,18 +72,22 @@ def generar_recibo(retiro_id):
 def generar_pdf_concatenado():
 
     id_retiros = request.form.to_dict(False).get('recibo')
-    to_text =Traductor().to_text
-    pdf = Pdf()
-    retiros = models.Retiro.select().where(id__in = id_retiros)
-    for retiro in retiros:
-        html = render_template("recibo.html", cooperativa=retiro.socio.cooperativa, retiro=retiro, monto_como_cadena=to_text(retiro.monto))
-        pdf.append(html)
+    if id_retiros:
+        retiros = models.Retiro.select().where(id__in = id_retiros)
+        to_text =Traductor().to_text
+        pdf = Pdf()
+        for retiro in retiros:
+            html = render_template("recibo.html", cooperativa=retiro.socio.cooperativa, retiro=retiro, monto_como_cadena=to_text(retiro.monto))
+            pdf.append(html)
 
-    resp = Response(pdf.get_stream(), mimetype='application/pdf')
-    titulo = "Recibos_concat_%s" % int(time.time())
-    resp.headers['Content-Disposition'] = 'attachment; filename="%s.pdf"' %titulo
+        resp = Response(pdf.get_stream(), mimetype='application/pdf')
+        titulo = "Recibos_concat_%s" % int(time.time())
+        resp.headers['Content-Disposition'] = 'attachment; filename="%s.pdf"' %titulo
 
-    return resp
+        return resp
+    else:
+        flash(u"No seleccionó ninguna fila para generar el PDF", "alert")
+        return redirect(url_for('principal'))
 
 
 def parece_fecha(palabra):

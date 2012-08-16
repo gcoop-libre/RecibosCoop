@@ -3,17 +3,33 @@ $(document).ready(function() {
     "sWrapper": "dataTables_wrapper form-inline"
   });
 
-  function cambio_checkbox_recibo(){
+  function cambio_checkbox_recibo() {
+    var a = $('.selector_recibo').map(
+      function(idx, element) { return element.checked;
+      });
+    
     if (!this.checked){
       $('#seleccionar_todos').attr('checked', false);
+      
+      if ($.inArray(true, a) === -1) {
+        $('#submit_pdf').attr('disabled', true);
+        }
+    }
+    else {
+      if ($.inArray(false, a) === -1) {
+        $('#seleccionar_todos').attr('checked', true);
+      }
+      $('#submit_pdf').removeAttr('disabled');
     }
   }
 
-  function cambio_checkbox(){
+  function cambio_checkbox() {
     if (this.checked){
+      $('#submit_pdf').removeAttr('disabled');
       $('.selector_recibo').attr('checked', true);
     } else { 
       $('.selector_recibo').attr('checked', false);
+      $('#submit_pdf').attr('disabled', true);
     }
   }
 
@@ -37,9 +53,7 @@ $(document).ready(function() {
     "bServerSide": true,
     "sAjaxSource": "/obtener_retiros",
     "fnDrawCallback": function (){
-      $('.selector_recibo').each(function(id){
-        $(this).change(cambio_checkbox_recibo);
-      });  
+        $('.selector_recibo').change(cambio_checkbox_recibo);  
     }
   });
 
