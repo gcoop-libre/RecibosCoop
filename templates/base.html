@@ -7,8 +7,15 @@
     <link rel="stylesheet" href="/static/style.css" type="text/css" />
     <link rel="stylesheet" href="/static/css/bootstrap.min.css" type="text/css" />
     <link rel="stylesheet" href="/static/css/jquery.dataTables.css" type="text/css" />
-
     {{ javascript("jquery.js") | safe }}
+    {{ javascript("bootstrap-alert.js") | safe }}
+    
+    <script language="text/javascript">
+      $(document).ready(
+        function() {
+          $(".alert").alert();
+        });
+    </script>
 
   </head>
 
@@ -38,11 +45,20 @@
     <div class="container-fluid">
       <div class="row-fluid">
         <div class='contenido'>
-
           <div class="span2">
           </div>
 
           <div class="span8">
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                    {% for category, message in messages %}
+                    <div class="alert alert-block alert-{{ category }}">
+                      <a class="close" href="#" data-dismiss="alert">×</a>
+                      <p>{{ message }}</p>
+                    </div>
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
             {% block content %}{% endblock %}
           </div>
 
