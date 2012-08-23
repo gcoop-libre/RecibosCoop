@@ -2,8 +2,9 @@
 
 import helpers
 import time
+import os
 
-from flask import Flask, render_template, redirect, url_for, request, Response, jsonify, flash, abort
+from flask import Flask, render_template, redirect, url_for, request, Response, jsonify, flash, abort, send_from_directory
 
 from peewee import Q
 from flask_peewee.auth import Auth
@@ -60,6 +61,8 @@ def importar():
     return render_template("importar.html", form=form, socios=socios)
 
 
+
+
 @app.route("/pdf/<retiro_id>")
 @auth.login_required
 @to_pdf()
@@ -76,20 +79,28 @@ def generar_pdf_concatenado():
     id_retiros = request.form.to_dict(False).get('recibo')
     if id_retiros:
         retiros = models.Retiro.select().where(id__in = id_retiros)
-        to_text =Traductor().to_text
+        to_text = Traductor().to_text
         pdf = Pdf()
 
         for retiro in retiros:
             html = render_template("recibo.html", cooperativa=retiro.socio.cooperativa, retiro=retiro, monto_como_cadena=to_text(retiro.monto))
             pdf.append(html)
 
-        resp = Response(pdf.get_stream(), mimetype='application/pdf')
         titulo = "Recibos_concat_%s" % int(time.time())
-        resp.headers['Content-Disposition'] = 'attachment; filename="%s.pdf"' %titulo
 
-        return resp
+        nombre_archivo = os.path.join(app.config['UPLOAD_FOLDER'], titulo + '.pdf')
+        archivo_temporal = open(nombre_archivo, 'wb')
+        archivo_temporal.write(pdf.get_stream())
+        archivo_temporal.close()
+
+        return jsonify(name=titulo + '.pdf')
     else:
         abort(404)
+
+
+@app.route("/descargar/<nombre>")
+def descargar(nombre):
+    return send_from_directory(app.config['UPLOAD_FOLDER'], nombre)
 
 
 def parece_fecha(palabra):

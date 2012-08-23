@@ -30,14 +30,15 @@ $(document).ready(function (){
               type: "POST",
               url: $("#formulario_recibos").attr('action'),
               data: $("#formulario_recibos").serialize(),
-              dataType: "script",
+              dataType: "json",
               beforeSend: function(objeto){
                 borrar_mensajes();
                 mostrar_mensaje_progreso("Procesando...");
               },
-              success: function(msg){
+              success: function(data){
                 borrar_mensajes();
-                mostrar_mensaje("Se ha generado el PDF correctamente.");
+                template = "El archivo pdf ha sido generado. <a href='/descargar/{{name}}'>Descargar archivo</a>.";
+                mostrar_mensaje(Mustache.render(template, data));
               },
               error: function(_, _, motivo){
                 borrar_mensajes();

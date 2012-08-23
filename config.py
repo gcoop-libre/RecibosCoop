@@ -6,3 +6,4 @@ DATABASE = {
     'engine': 'peewee.SqliteDatabase',
 }
 
+UPLOAD_FOLDER = '/tmp'
