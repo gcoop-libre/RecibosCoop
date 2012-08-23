@@ -3,7 +3,7 @@
 import helpers
 import time
 
-from flask import Flask, render_template, redirect, url_for, request, Response, jsonify, flash
+from flask import Flask, render_template, redirect, url_for, request, Response, jsonify, flash, abort
 
 from peewee import Q
 from flask_peewee.auth import Auth
@@ -73,12 +73,12 @@ def generar_recibo(retiro_id):
 @app.route("/pdf_concatenado", methods=["POST"])
 @auth.login_required
 def generar_pdf_concatenado():
-
     id_retiros = request.form.to_dict(False).get('recibo')
     if id_retiros:
         retiros = models.Retiro.select().where(id__in = id_retiros)
         to_text =Traductor().to_text
         pdf = Pdf()
+
         for retiro in retiros:
             html = render_template("recibo.html", cooperativa=retiro.socio.cooperativa, retiro=retiro, monto_como_cadena=to_text(retiro.monto))
             pdf.append(html)
@@ -89,8 +89,7 @@ def generar_pdf_concatenado():
 
         return resp
     else:
-        flash(u"No seleccionó ninguna fila para generar el PDF", "alert")
-        return redirect(url_for('principal'))
+        abort(404)
 
 
 def parece_fecha(palabra):
