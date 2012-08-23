@@ -228,3 +228,7 @@ table.table thead .sorting_desc_disabled { background: url('images/sort_desc_dis
     text-align: center;
 }
 
+#submit_pdf[disabled=disabled] {
+    cursor: default;
+}
+
