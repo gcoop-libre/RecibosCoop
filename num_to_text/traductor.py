@@ -32,8 +32,9 @@ class Traductor(object):
         return texto
 
     def __calcular_decimales(self, number):
+
         try:
-            dec = number.remainder_near(1)
+            dec = (number % 1).quantize(Decimal('0.01'))
         except InvalidOperation:
             #Usamos strings para obtener la parte decimal
             dec_tp = number.as_tuple()
