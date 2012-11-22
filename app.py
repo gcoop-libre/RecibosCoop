@@ -10,8 +10,6 @@ from peewee import Q
 from flask_peewee.auth import Auth
 from flask_peewee.db import Database
 from flask_peewee.admin import Admin
-from flask.ext.celery import Celery
-from celery import exceptions
 
 from pdf import to_pdf, Pdf
 from num_to_text import Traductor
@@ -23,7 +21,6 @@ helpers.Helpers(app)
 db = Database(app)
 auth = Auth(app, db)
 admin = Admin(app, auth)
-celery = Celery(app)
 
 
 import models
