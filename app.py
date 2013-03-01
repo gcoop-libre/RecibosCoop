@@ -4,7 +4,7 @@ import helpers
 import time
 import os
 
-from flask import Flask, render_template, redirect, url_for, request, Response, jsonify, flash, abort, send_from_directory
+from flask import Flask, render_template, redirect, url_for, request, jsonify, abort, send_from_directory
 
 from peewee import Q
 from flask_peewee.auth import Auth
@@ -95,14 +95,52 @@ def generar_pdf_concatenado():
         abort(404)
 
 
+@app.route("/zip_contenedor", methods=["POST"])
+@auth.login_required
+def generar_zip_contenedor():
+    archivos_pdf_generados = []
+    id_retiros = request.form.to_dict(False).get('recibo')
+
+    if id_retiros:
+        retiros = models.Retiro.select().where(id__in=id_retiros)
+        to_text = Traductor().to_text
+
+        for retiro in retiros:
+            pdf = Pdf()
+            html = render_template("recibo.html", cooperativa=retiro.socio.cooperativa, retiro=retiro, monto_como_cadena=to_text(retiro.monto))
+            pdf.append(html)
+
+            titulo = models.Retiro.obtener_nombre_por_id(retiro.id)
+            nombre_archivo = os.path.join(app.config['UPLOAD_FOLDER'], titulo + ".pdf")
+            print "generando", [nombre_archivo]
+
+            archivos_pdf_generados.append(nombre_archivo)
+            archivo_temporal = open(nombre_archivo, 'wb')
+            archivo_temporal.write(pdf.get_stream())
+            archivo_temporal.close()
+
+        import zipfile
+
+        nombre = "Recibos_%d.zip" %int(time.time())
+        nombre_archivo = os.path.join(app.config['UPLOAD_FOLDER'], nombre)
+        zip = zipfile.ZipFile(nombre_archivo, mode='w')
+
+        for nombre_pdf in archivos_pdf_generados:
+          print "zipeando", [nombre_pdf]
+          zip.write(nombre_pdf)
+
+        zip.close()
+
+        return jsonify(name=nombre)
+    else:
+        abort(404)
+
 @app.route("/descargar/<nombre>")
 def descargar(nombre):
     return send_from_directory(app.config['UPLOAD_FOLDER'], nombre)
 
-
 def parece_fecha(palabra):
     return '/' in palabra or palabra.isdigit()
-
 
 @app.route("/obtener_retiros")
 def obtener_retiros():

@@ -50,3 +50,9 @@ class Retiro(db.Model):
         self.numero = Retiro.select().count() + 700
         return db.Model.save(self)
 
+    @classmethod
+    def obtener_nombre_por_id(k_class, _id):
+        retiro = Retiro.get(id=_id)
+        return u'Recibo_%s_%s_%s' %("".join(retiro.fecha.split("/")[::-1]),
+                             retiro.socio.nombre.replace(" ", "_"),
+                             retiro.socio.apellido.replace(" ", "_"))

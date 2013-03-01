@@ -13,23 +13,27 @@ $(document).ready(function() {
       
       if ($.inArray(true, a) === -1) {
         $('#submit_pdf').attr('disabled', true);
-        }
+        $('#submit_zip').attr('disabled', true);
+      }
     }
     else {
       if ($.inArray(false, a) === -1) {
         $('#seleccionar_todos').attr('checked', true);
       }
       $('#submit_pdf').removeAttr('disabled');
+      $('#submit_zip').removeAttr('disabled');
     }
   }
 
   function cambio_checkbox() {
     if (this.checked){
       $('#submit_pdf').removeAttr('disabled');
+      $('#submit_zip').removeAttr('disabled');
       $('.selector_recibo').attr('checked', true);
     } else { 
       $('.selector_recibo').attr('checked', false);
       $('#submit_pdf').attr('disabled', true);
+      $('#submit_zip').attr('disabled', true);
     }
   }
 
