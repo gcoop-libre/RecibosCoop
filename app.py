@@ -121,7 +121,7 @@ def obtener_retiros():
     # Aplicando limites
     limite = int(request.args.get('iDisplayLength'))
     desde = int(request.args.get('iDisplayStart'))
-    retiros = retiros.order_by(('fecha', 'desc')).paginate(desde/limite, limite)
+    retiros = retiros.order_by(('fecha', 'desc')).paginate((desde/limite) + 1, limite)
 
     datos = [convertir_en_formato_de_tabla(d) for d in retiros]
     total = retiros.count()
