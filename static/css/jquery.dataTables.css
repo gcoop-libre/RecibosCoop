@@ -8,7 +8,6 @@ table.dataTable thead th {
 	border-bottom: 1px solid black;
 	font-weight: bold;
 	cursor: pointer;
-    background-color: rgb(240, 240, 240);
 	*cursor: hand;
 }
 
@@ -19,7 +18,6 @@ table.dataTable tfoot th {
 }
 
 table.dataTable td {
-    padding: 4px;
 }
 
 table.dataTable td.center,

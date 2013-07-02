@@ -26,11 +26,21 @@ admin = Admin(app, auth)
 import models
 import forms
 
+def menu(opcion):
+    opciones = [
+            ['/', 'Principal', ''],
+            ['/importar', 'Importar', ''],
+            ['/admin', 'Administrar', ''],
+    ]
+
+    opciones[opcion][2] = 'active'
+    return opciones
+
 
 @app.route("/")
 @auth.login_required
 def principal():
-    return render_template("principal.html")
+    return render_template("principal.html", menu=menu(0))
 
 def importar_recibos(fecha, montos):
     socios = [socio for socio in models.Socio.select()]
@@ -55,7 +65,7 @@ def importar():
         form = forms.ImportarForm(csrf_enabled=False)
 
     socios = u"\n".join([x + u" → " for x in obtener_lista_de_socios()])
-    return render_template("importar.html", form=form, socios=socios)
+    return render_template("importar.html", form=form, socios=socios, menu=menu(1))
 
 
 
@@ -182,7 +192,7 @@ def convertir_en_formato_de_tabla(retiro):
     check = '<input class="centrar selector_recibo" type="checkbox" name="recibo" value="%s">' % retiro.id
     acciones = "<a href='%s' class='derecha badge badge-warning'>PDF</a>" %(url_for('generar_recibo', retiro_id=retiro.id))
     fecha = retiro.fecha
-    return [check, nombre, fecha, float(retiro.monto), acciones]
+    return [check, nombre, fecha, "{0:.2f}".format(float(retiro.monto)), acciones]
 
 def registrar_modelos(admin, models):
     auth.register_admin(admin)

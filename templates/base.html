@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" ng-app='recibos'>
   <head>
     <meta http-equiv="Content-Type" content="textxt/html" charset="UTF-8" />
     <title>Recibos Gcoop</title>
@@ -7,6 +7,8 @@
     <link rel="stylesheet" href="/static/style.css" type="text/css" />
     <link rel="stylesheet" href="/static/css/bootstrap.min.css" type="text/css" />
     <link rel="stylesheet" href="/static/css/jquery.dataTables.css" type="text/css" />
+    <link rel="stylesheet" href="/static/css/DT_bootstrap.css" type="text/css" />
+
     {{ javascript("jquery.js") | safe }}
     {{ javascript("bootstrap-alert.js") | safe }}
     {{ javascript("mustache.js") | safe }}
@@ -21,7 +23,7 @@
 
   </head>
 
-  <body>
+  <body ng-controller='ListaController'>
 
 
     <div class="navbar navbar-fixed-top">
@@ -31,13 +33,13 @@
 
           <div class="nav-collapse">
             <ul class="nav">
-              <li><a href="/">Principal</a></li>
-              <li><a href="/importar">Importar</a></li>
-              <li><a href="/admin">Administrar</a></li>
+            {% for route, title, class in menu %}
+                <li class={{class}}><a href="{{route}}">{{title}}</a></li>
+            {% endfor %}
             </ul>
           </div>
           <form action="/accounts/logout/" class="navbar-form pull-right" method="get">
-            <button class="btn danger">Logout</button>
+            <button class="btn danger">Salir</button>
           </form>
         </div>
       </div>
@@ -47,10 +49,11 @@
     <div class="container-fluid">
       <div class="row-fluid">
         <div class='contenido'>
-          <div class="span2">
+
+          <div class="span1">
           </div>
 
-          <div class="span8">
+          <div class="span10">
             {% with messages = get_flashed_messages(with_categories=true) %}
                 {% if messages %}
                     {% for category, message in messages %}
@@ -64,7 +67,7 @@
             {% block content %}{% endblock %}
           </div>
 
-          <div class="span2">
+          <div class="span1">
           </div>
 
         </div>
@@ -77,4 +80,10 @@
 
     </div>
   </body>
+
+
+
+  <script src='/static/js/angular.min.js'></script>
+  <script src='/static/js/app.js'></script>
+
 </html>
