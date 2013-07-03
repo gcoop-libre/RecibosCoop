@@ -3,6 +3,8 @@
 
 <link rel="stylesheet" href="/static/css/datepicker.css" type="text/css" />
 {{ javascript("bootstrap-datepicker.js") | safe }}
+{{ javascript("bootstrap-dropdown.js") | safe }}
+
 
 <style>
 textarea#nombres {
@@ -90,7 +92,7 @@ function cuando_ingresa_monto() {
 
   /* Imprime el mensaje inicial */
   if (cantidad_de_montos === 0) {
-    imprimir_mensaje("info", "Por favor ingresa los montos en el panel de la derecha.");
+    imprimir_mensaje("info", "Por favor ingresa los montos en el panel de la derecha.<br/>Puedes colocar en cualquier linea 0 para omitir la generación del recibo.");
     habilitar_boton(false);
     return;
   }
@@ -116,6 +118,13 @@ $(document).ready(function() {
   cuando_ingresa_monto();
   $("#montos").live('keyup', cuando_ingresa_monto);
   $("#fecha").datepicker();
+
+
+  $(".opcion_dropdown").click(function(e, target) {
+    $("#concepto").val($(this).text());
+  });
+
+
 });
 </script>
 
@@ -151,6 +160,16 @@ $(document).ready(function() {
       </td>
       <td>
          {{form.concepto}}  <span style='color: red' class="help-inline"> {{ "<br/>".join(form.errors['concepto']) }} </span>
+
+         <div style='display: inline-block' class="btn-group">
+              <a class="btn btn-mini dropdown-toggle" data-toggle="dropdown" href="#">Completar <span class="caret"></span></a>
+
+              <ul class="dropdown-menu">
+                <li><a class='opcion_dropdown' href="#">anticipo de retornos a cuenta de excedentes</a></li>
+                <li><a class='opcion_dropdown' href="#">retornos a cuenta de excedentes anual</a></li>
+              </ul>
+         </div>
+
       </td>
     </tr>
 
@@ -182,4 +201,5 @@ $(document).ready(function() {
 
   <button id='importar' class='btn btn-primary' type='submit'><i class="icon-ok -circle icon-white"></i> Importar </button>
 </form>
+
 {% endblock %}
