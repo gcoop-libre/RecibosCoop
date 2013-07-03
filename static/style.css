@@ -239,3 +239,7 @@ table.table thead .sorting_desc_disabled { background: url('images/sort_desc_dis
 div.busqueda {
   margin-left: 0;
 }
+
+div.operacion_masiva {
+  display: none;
+}

@@ -152,9 +152,9 @@ $(document).ready(function() {
 
 
   function cambio_checkbox_recibo() {
-    var a = $('.selector_recibo').map(
-      function(idx, element) { return element.checked;
-      });
+    var a = $('.selector_recibo').map(function(idx, element) {
+      return element.checked;
+    });
     
     if (!this.checked){
       $('#seleccionar_todos').attr('checked', false);
@@ -170,6 +170,7 @@ $(document).ready(function() {
       if ($.inArray(false, a) === -1) {
         $('#seleccionar_todos').attr('checked', true);
       }
+
       $('#submit_pdf').removeAttr('disabled');
       $('#submit_zip').removeAttr('disabled');
     }
@@ -180,10 +181,12 @@ $(document).ready(function() {
       $('#submit_pdf').removeAttr('disabled');
       $('#submit_zip').removeAttr('disabled');
       $('.selector_recibo').attr('checked', true);
+      $('.operacion_masiva').show();
     } else { 
       $('.selector_recibo').attr('checked', false);
       $('#submit_pdf').attr('disabled', true);
       $('#submit_zip').attr('disabled', true);
+      $('.operacion_masiva').hide();
     }
   }
 
