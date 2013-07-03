@@ -9,7 +9,5 @@ gunicorn==0.14.6
 gunicorn-console==0.1.12
 peewee==0.9.6
 pyPdf==1.13
-setproctitle==1.1.6
-sphinx-me==0.1.2
 wsgiref==0.1.2
 wtf-peewee==0.1.3
