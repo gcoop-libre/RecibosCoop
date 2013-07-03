@@ -46,8 +46,9 @@ def importar_recibos(fecha, concepto, montos):
     socios = [socio for socio in models.Socio.select()]
 
     for (index, monto) in enumerate(montos):
-        retiro = models.Retiro(socio=socios[index], concepto=concepto, fecha=fecha, monto=monto)
-        retiro.save()
+        if monto:
+            retiro = models.Retiro(socio=socios[index], concepto=concepto, fecha=fecha, monto=monto)
+            retiro.save()
 
 
 @app.route("/importar", methods=["POST", "GET"])
@@ -98,14 +99,14 @@ def generar_pdf_concatenado():
             html = render_template("recibo.html", cooperativa=retiro.socio.cooperativa, retiro=retiro, monto_como_cadena=to_text(retiro.monto))
             pdf.append(html)
 
-        titulo = "Recibos_concat_%s" % int(time.time())
+        titulo = "recibos_agrupados_%s.pdf" % (retiro.fecha_como_string())
 
-        nombre_archivo = os.path.join(app.config['UPLOAD_FOLDER'], titulo + '.pdf')
+        nombre_archivo = os.path.join(app.config['UPLOAD_FOLDER'], titulo)
         archivo_temporal = open(nombre_archivo, 'wb')
         archivo_temporal.write(pdf.get_stream())
         archivo_temporal.close()
 
-        return jsonify(name=titulo + '.pdf')
+        return jsonify(name=titulo)
     else:
         abort(404)
 
@@ -127,7 +128,6 @@ def generar_zip_contenedor():
 
             titulo = models.Retiro.obtener_nombre_por_id(retiro.id)
             nombre_archivo = os.path.join(app.config['UPLOAD_FOLDER'], titulo + ".pdf")
-            print "generando", [nombre_archivo]
 
             archivos_pdf_generados.append(nombre_archivo)
             archivo_temporal = open(nombre_archivo, 'wb')
@@ -136,7 +136,7 @@ def generar_zip_contenedor():
 
         import zipfile
 
-        nombre = "Recibos_%d.zip" %int(time.time())
+        nombre = "recibos_agrupados_%s.zip" %(retiro.fecha_como_string())
         nombre_archivo = os.path.join(app.config['UPLOAD_FOLDER'], nombre)
         zip = zipfile.ZipFile(nombre_archivo, mode='w')
 
@@ -213,7 +213,6 @@ def convertir_en_formato_de_tabla(retiro):
     check = '<input class="centrar selector_recibo" type="checkbox" name="recibo" value="%s">' % retiro.id
     acciones = [
         "<a href='%s' class='derecha badge badge-warning'>PDF</a>" %(url_for('generar_recibo', retiro_id=retiro.id)),
-        "<a href='%s' class='derecha badge badge-warning'>HTML</a>" %(url_for('generar_recibo_html', retiro_id=retiro.id))
     ]
     fecha = retiro.fecha
     return [check, nombre, fecha, "{0:.2f}".format(float(retiro.monto)), ' '.join(acciones)]

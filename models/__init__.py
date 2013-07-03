@@ -54,6 +54,9 @@ class Retiro(db.Model):
     @classmethod
     def obtener_nombre_por_id(k_class, _id):
         retiro = Retiro.get(id=_id)
-        return u'Recibo_%s_%s_%s' %("".join(retiro.fecha.split("/")[::-1]),
+        return u'Recibo_%s_%s_%s' %(retiro.fecha_como_string(),
                              retiro.socio.nombre.replace(" ", "_"),
                              retiro.socio.apellido.replace(" ", "_"))
+
+    def fecha_como_string(self):
+        return "".join(self.fecha.split("/")[::-1])
