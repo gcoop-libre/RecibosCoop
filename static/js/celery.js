@@ -2,7 +2,7 @@ $(document).ready(function (){
 
   function mostrar_mensaje(mensaje, tipo) {
     var tipo = tipo || 'success';
-    var placeholder = $(".contenido .span8 form");
+    var placeholder = $(".contenido .span10 form");
     var template = '<div class="alert alert-block alert-{{tipo}}">{{{close_button}}} <p>{{{mensaje}}}</p></div>';
     var values = {
         close_button: '<a class="close" data-dismiss="alert" href="#">×</a>',
@@ -24,6 +24,7 @@ $(document).ready(function (){
   }
 
   function reemplazar_boton_generar_pdf_concatenados(){
+
     $("#submit_pdf").click(function(){
           $(this).attr('disabled', 'disabled');
           $("#submit_zip").attr('disabled', 'disabled');

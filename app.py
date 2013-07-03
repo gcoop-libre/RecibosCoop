@@ -74,6 +74,11 @@ def importar():
 @auth.login_required
 @to_pdf()
 def generar_recibo(retiro_id):
+    return generar_recibo_html(retiro_id)
+
+@app.route("/html/<retiro_id>")
+@auth.login_required
+def generar_recibo_html(retiro_id):
     retiro = models.Retiro.get(id=retiro_id)
     monto_como_cadena = Traductor().to_text(retiro.monto)
 
@@ -206,9 +211,12 @@ def convertir_en_formato_de_tabla(retiro):
     "Convierte un registro de datos base en una lista de celdas para una tabla."
     nombre = retiro.socio.nombre_completo()
     check = '<input class="centrar selector_recibo" type="checkbox" name="recibo" value="%s">' % retiro.id
-    acciones = "<a href='%s' class='derecha badge badge-warning'>PDF</a>" %(url_for('generar_recibo', retiro_id=retiro.id))
+    acciones = [
+        "<a href='%s' class='derecha badge badge-warning'>PDF</a>" %(url_for('generar_recibo', retiro_id=retiro.id)),
+        "<a href='%s' class='derecha badge badge-warning'>HTML</a>" %(url_for('generar_recibo_html', retiro_id=retiro.id))
+    ]
     fecha = retiro.fecha
-    return [check, nombre, fecha, "{0:.2f}".format(float(retiro.monto)), acciones]
+    return [check, nombre, fecha, "{0:.2f}".format(float(retiro.monto)), ' '.join(acciones)]
 
 def registrar_modelos(admin, models):
     auth.register_admin(admin)
