@@ -139,6 +139,23 @@ $(document).ready(function() {
     </tr>
 
     <tr>
+      <td>
+      </td>
+      <td>
+        {{ form.concepto.label }}
+      </td>
+    </tr>
+
+    <tr>
+      <td>
+      </td>
+      <td>
+         {{form.concepto}}  <span style='color: red' class="help-inline"> {{ "<br/>".join(form.errors['concepto']) }} </span>
+      </td>
+    </tr>
+
+
+    <tr>
       <td width="300px">
         Personas
       </td>

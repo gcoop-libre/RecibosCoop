@@ -11,6 +11,9 @@
             N° 0001 - {{retiro.numero}} 
         </div>
     </div>
+    <div class='copia-numero'>
+      N° 0001 - {{retiro.numero}} 
+    </div>
 </div> <!-- cierra #encabezado -->
 
 <div id="datos">
@@ -41,7 +44,7 @@
 
 <div id="firma">
 <!-- <p class="linea-punteada">&#8226; &#8226; &#8226; &#8226; &#8226; &#8226; &#8226; &#8226; &#8226; &#8226; &#8226; &#8226; &#8226; &#8226; &#8226; &#8226; &#8226; &#8226; &#8226; &#8226; &#8226; &#8226; &#8226; &#8226; &#8226; &#8226; &#8226; &#8226; &#8226; &#8226; &#8226; &#8226; &#8226; &#8226; &#8226; &#8226; &#8226; &#8226; &#8226; &#8226; &#8226; &#8226; &#8226; &#8226; &#8226; &#8226; &#8226; &#8226; &#8226; &#8226; &#8226; &#8226; &#8226; &#8226; &#8226; &#8226; &#8226; &#8226; &#8226; &#8226; &#8226; &#8226; &#8226; &#8226; &#8226; &#8226; &#8226; &#8226; &#8226; &#8226; &#8226; &#8226; &#8226; &#8226; &#8226; &#8226; &#8226; &#8226; &#8226; &#8226; &#8226; &#8226; &#8226; &#8226; &#8226; &#8226; &#8226; &#8226; &#8226; &#8226; &#8226; &#8226; &#8226; &#8226; &#8226; &#8226; &#8226; &#8226; &#8226;</p> -->
-    <p>Recibí conforme la suma de Pesos <strong>{{monto_como_cadena }}</strong> en concepto de anticipo de retornos a cuenta de excedentes por mi aporte como trabajador asociado.</p>
+<p>Recibí conforme la suma de Pesos <strong>{{monto_como_cadena }}</strong> en concepto de <strong>{{retiro.concepto}}</strong> por mi aporte como trabajador asociado.</p>
 
     <div id="monto-fecha">
     <div class="monto"><label>Son $</label> {{retiro.monto}}</div>

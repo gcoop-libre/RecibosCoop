@@ -136,7 +136,7 @@ body {
 }
 
 #recibo {
-	background: #ccc;
+	background: #999;
 	color: #fff;
 	font-size: 18px;
 }
@@ -242,4 +242,12 @@ div.busqueda {
 
 div.operacion_masiva {
   display: none;
+}
+
+.copia-numero {
+  float: right;
+  text-align: right;
+  font-family: monospace;
+  font-size: 15px;
+  margin-top: 5px;
 }

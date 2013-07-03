@@ -42,11 +42,11 @@ def menu(opcion):
 def principal():
     return render_template("principal.html", menu=menu(0))
 
-def importar_recibos(fecha, montos):
+def importar_recibos(fecha, concepto, montos):
     socios = [socio for socio in models.Socio.select()]
 
     for (index, monto) in enumerate(montos):
-        retiro = models.Retiro(socio=socios[index], fecha=fecha, monto=monto)
+        retiro = models.Retiro(socio=socios[index], concepto=concepto, fecha=fecha, monto=monto)
         retiro.save()
 
 
@@ -58,7 +58,7 @@ def importar():
 
         if form.validate():
             fecha = request.form['fecha']
-            importar_recibos(fecha, request.form['montos'].strip().split("\n"))
+            importar_recibos(fecha, request.form['concepto'], request.form['montos'].strip().split("\n"))
             return redirect(url_for('principal', s=fecha))
 
     else:

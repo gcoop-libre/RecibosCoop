@@ -35,6 +35,7 @@ class Retiro(db.Model):
     socio = ForeignKeyField(Socio, related_name="retiros")
     fecha = CharField()
     monto = DecimalField(max_digits=30, decimal_places=2)
+    concepto = CharField(max_lenght=255)
 
     def __unicode__(self):
         return u'<Retiro %s de %s$ del socio %s %s>' % (
