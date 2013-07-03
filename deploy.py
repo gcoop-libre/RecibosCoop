@@ -67,7 +67,7 @@ def cargar_coopeativa_con_socios():
         print ""
         print "Si quieres cargar datos puedes ejecutar estos comandos:"
         print ""
-        print "     cp tests/data/cooperativas.csv socios.csv"
+        print "     cp tests/data/socios.csv socios.csv"
         print "     cp tests/data/cooperativas.csv cooperativas.csv"
         print "     "
         print "     python deploy.py"
