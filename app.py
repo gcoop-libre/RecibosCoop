@@ -169,7 +169,21 @@ def obtener_retiros():
     # Aplicando limites
     limite = int(request.args.get('iDisplayLength'))
     desde = int(request.args.get('iDisplayStart'))
-    retiros = retiros.order_by(('fecha', 'desc')).paginate((desde/limite) + 1, limite)
+
+    indice_columna_ordenamiento = int(request.args.get('iSortCol_0'))
+
+    # Intenta ordenar los resultados en base a la seleccion del usuario
+    if indice_columna_ordenamiento > 0:
+        columnas = {
+                1: 'apellido',
+                2: 'fecha',
+                3: 'monto',
+                }
+        columna_a_ordenar = columnas[indice_columna_ordenamiento]
+        tipo_ordenamiento = request.args.get('sSortDir_0')
+        retiros = retiros.order_by((columna_a_ordenar, tipo_ordenamiento))
+
+    retiros = retiros.paginate((desde/limite) + 1, limite)
 
     datos = [convertir_en_formato_de_tabla(d) for d in retiros]
     total = retiros.count()
