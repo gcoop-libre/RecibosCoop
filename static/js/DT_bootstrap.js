@@ -191,8 +191,8 @@ $(document).ready(function() {
 
 
 
-	$('#example').dataTable( {
-		"sDom": "<'row'<'span6'><'span6'f>r>t<'row'<'span6'il><'span6'p>>",
+	var mydatatable = $('#example').dataTable( {
+		"sDom": "<'row'<'span6'><'span6'>r>t<'row'<'span6'il><'span6'p>>",
 		"sPaginationType": "bootstrap",
 		"oLanguage": {
 			"sLengthMenu": "Mostrar _MENU_ registros por página",
@@ -201,7 +201,7 @@ $(document).ready(function() {
 			"sInfoEmpty": "No hay elementos para mostrar"
 		},
     "aoColumns": [
-      {bSortable: false},
+      {bSortable: false, sWidth: "20px"},
       null,
       {sClass: 'fecha'},
       {sClass: 'monto', sWidth: "80px"},
@@ -233,5 +233,22 @@ $(document).ready(function() {
     table.fnFilter(busqueda);
   } 
 
+  function lanzar_busqueda() {
+    var cadena = $("#query").val();
+    mydatatable.fnFilter(cadena);
+  }
+
+  $("#query").change(function() {
+    lanzar_busqueda();
+  });
+
+  $("#search-button").click(function() {
+    lanzar_busqueda();
+  });
+
+  $("#clear-button").click(function() {
+    $("#query").val('');
+    lanzar_busqueda();
+  });
 
 } );

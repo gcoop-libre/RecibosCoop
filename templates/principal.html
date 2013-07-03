@@ -5,13 +5,28 @@
 {{ javascript('datatable.js') | safe }}
 {{ javascript("DT_bootstrap.js") | safe }}
 
+
+  <div class='row busqueda'>
+    <div class='span7'>
+      <div class='operacion_masiva'>
+      Con los registros seleccionados generar un archivo <input type='submit' class="badge badge-warning" value="PDF" id='submit_pdf' disabled='disabled' /> o un
+      archivo <input type='submit' class="badge badge-info" value="ZIP" id='submit_zip' disabled='disabled' />
+      </div>
+    </div>
+
+    <div class='span5'>
+        <div style='text-align: right' class="input-append">
+          <input type="text" placeholder='fecha o nombre' id='query' class="search-query">
+          <button type="submit" id='search-button' class="search-btn btn">Buscar</button>
+          <button type="submit" id='clear-button' class="btn">Limpiar</button>
+        </div>
+    </div>
+
+  </div>
+
+
+
 <form np-app='recibos' ng-controller='ListaController' id="formulario_recibos" action={{ url_for('generar_pdf_concatenado') }} method="POST">
-
-<div class='operacion_masiva'>
-Con los registros seleccionados generar un archivo <input type='submit' class="badge badge-warning" value="PDF" id='submit_pdf' disabled='disabled' /> o un
-archivo <input type='submit' class="badge badge-info" value="ZIP" id='submit_zip' disabled='disabled' />
-</div>
-
 <table width="100%" cellpadding="0" cellspacing="0" border="0" class="table table-striped table-bordered" id="example">
 	<thead>
 		<tr>

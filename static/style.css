@@ -186,7 +186,7 @@ p.linea-punteada {
 
 /* PAGINA PRINCIPAL */
 div.contenido {
-    margin-top: 50px;
+    margin-top: 70px;
 }
 
 table.dataTable {
@@ -234,4 +234,8 @@ table.table thead .sorting_desc_disabled { background: url('images/sort_desc_dis
 
 #submit_zip[disabled=disabled] {
     cursor: default;
+}
+
+div.busqueda {
+  margin-left: 0;
 }

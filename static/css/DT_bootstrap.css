@@ -217,3 +217,10 @@ div.operacion_masiva {
 .dataTables_length {
   margin-top: 8px;
 }
+
+
+
+.search-query {
+  padding-left: 4px;
+  width: 150px;
+}
