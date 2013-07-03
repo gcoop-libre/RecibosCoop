@@ -5,7 +5,7 @@
 {{ javascript('datatable.js') | safe }}
 {{ javascript("DT_bootstrap.js") | safe }}
 
-<form id="formulario_recibos" action={{ url_for('generar_pdf_concatenado') }} method="POST">
+<form np-app='recibos' ng-controller='ListaController' id="formulario_recibos" action={{ url_for('generar_pdf_concatenado') }} method="POST">
 
 <div class='operacion_masiva'>
 Con los registros seleccionados generar un archivo <input type='submit' class="badge badge-warning" value="PDF" id='submit_pdf' disabled='disabled' /> o un
