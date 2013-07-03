@@ -182,6 +182,8 @@ def obtener_retiros():
         columna_a_ordenar = columnas[indice_columna_ordenamiento]
         tipo_ordenamiento = request.args.get('sSortDir_0')
         retiros = retiros.order_by((columna_a_ordenar, tipo_ordenamiento))
+    else:
+        retiros = retiros.order_by(('fecha', 'desc'))
 
     retiros = retiros.paginate((desde/limite) + 1, limite)
 
