@@ -206,6 +206,7 @@ $(document).ready(function() {
     "aoColumns": [
       {bSortable: false, sWidth: "20px"},
       null,
+      {sClass: 'numero'},
       {sClass: 'fecha'},
       {sClass: 'monto', sWidth: "80px"},
       {sClass: 'acciones', bSortable: false},

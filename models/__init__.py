@@ -46,15 +46,17 @@ class Retiro(db.Model):
                                         )
 
     def save(self):
-        # TODO: encontrar otra forma de hacer esto, IntegerField deberia
-        #       tener un parametro autoincrement (y un numero desde donde iniciar).
-        self.numero = Retiro.select().count() + 700
+        # TODO Aoregar UNIQUE de numero
+        for n in Retiro.select().order_by(('numero', 'desc')).limit(1):
+            self.numero = n.numero + 1
         return db.Model.save(self)
 
     @classmethod
     def obtener_nombre_por_id(k_class, _id):
         retiro = Retiro.get(id=_id)
-        return u'Recibo_%s_%s_%s' %(retiro.fecha_como_string(),
+        return u'Recibo_%s_%s_%s_%s' %(
+                             retiro.numero,
+                             retiro.fecha_como_string(),
                              retiro.socio.nombre.replace(" ", "_"),
                              retiro.socio.apellido.replace(" ", "_"))
 

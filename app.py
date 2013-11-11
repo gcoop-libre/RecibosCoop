@@ -181,14 +181,15 @@ def obtener_retiros():
     if indice_columna_ordenamiento > 0:
         columnas = {
                 1: 'apellido',
-                2: 'fecha',
-                3: 'monto',
+		2: 'numero',
+                3: 'fecha',
+                4: 'monto',
                 }
         columna_a_ordenar = columnas[indice_columna_ordenamiento]
         tipo_ordenamiento = request.args.get('sSortDir_0')
         retiros = retiros.order_by((columna_a_ordenar, tipo_ordenamiento))
     else:
-        retiros = retiros.order_by(('fecha', 'desc'))
+        retiros = retiros.order_by(('numero', 'desc'))
 
     retiros = retiros.paginate((desde/limite) + 1, limite)
 
@@ -215,7 +216,7 @@ def convertir_en_formato_de_tabla(retiro):
         "<a href='%s' class='derecha badge badge-warning'>PDF</a>" %(url_for('generar_recibo', retiro_id=retiro.id)),
     ]
     fecha = retiro.fecha
-    return [check, nombre, fecha, "{0:.2f}".format(float(retiro.monto)), ' '.join(acciones)]
+    return [check, nombre, retiro.numero, fecha, "{0:.2f}".format(float(retiro.monto)), ' '.join(acciones)]
 
 def registrar_modelos(admin, models):
     auth.register_admin(admin)

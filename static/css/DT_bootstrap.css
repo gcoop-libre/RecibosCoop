@@ -191,6 +191,14 @@ td.fecha {
   text-align: center;
 }
 
+td.numero {
+  text-align: center;
+}
+
+th.numero {
+  text-align: center;
+}
+
 th.fecha {
   text-align: center;
 }
