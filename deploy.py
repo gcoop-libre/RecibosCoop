@@ -27,6 +27,8 @@ def crear_tablas():
 
 
 def cargar_coopeativa_con_socios():
+    error = False
+
     try:
         cooperativas = csv.reader(open('cooperativas.csv', 'rb'), delimiter=',', quotechar='|')
 
@@ -41,6 +43,7 @@ def cargar_coopeativa_con_socios():
             print u"Importando cooperativa: %s" %(registro_coop)
     except IOError, e:
         print "Error: no exite el archivo 'cooperativas.csv' (vea el archivo 'tests/data/cooperativas.csv' como ejemplo.)"
+        error = True
 
     try:
         socios = csv.reader(open('socios.csv', 'rb'), delimiter=',', quotechar='|')
@@ -57,6 +60,18 @@ def cargar_coopeativa_con_socios():
             print u"Importando socio: %s" %(registro_socio)
     except IOError, e:
         print "Error: no exite el archivo 'socios.csv' (vea el archivo 'tests/data/socios.csv' como ejemplo.)"
+        error = True
+
+
+    if error:
+        print ""
+        print "Si quieres cargar datos puedes ejecutar estos comandos:"
+        print ""
+        print "     cp tests/data/socios.csv socios.csv"
+        print "     cp tests/data/cooperativas.csv cooperativas.csv"
+        print "     "
+        print "     python deploy.py"
+
 
 if __name__ == '__main__':
     crear_tablas()

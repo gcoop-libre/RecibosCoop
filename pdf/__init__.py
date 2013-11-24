@@ -26,7 +26,7 @@ def to_pdf(duplicate=False):
 
             resp = Response(encoded_pdf, mimetype='application/pdf')
             titulo = models.Retiro.obtener_nombre_por_id(kwargs['retiro_id'])
-            resp.headers['Content-Disposition'] = 'attachment; filename="%s.pdf"' %titulo
+            resp.headers['Content-Disposition'] = 'filename="%s.pdf"' %titulo
             return resp
         return decorated
     return wrap

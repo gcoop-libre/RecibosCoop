@@ -8,7 +8,7 @@ class TestObjetoPDF(unittest.TestCase):
 
     def assertPdfEquals(self, a, b):
         """Utility Function to test pdf equality"""
-        return self.assertEquals(a.splitlines()[6:], b.splitlines()[6:]);
+        return self.assertEquals(a.splitlines()[7:], b.splitlines()[7:]);
 
     def test_get_stream_single(self):
         first_html = "<h1>Hola Mundo</h1>"

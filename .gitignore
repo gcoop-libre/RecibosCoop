@@ -3,3 +3,5 @@
 
 recibos.db
 *.csv
+
+.DS_Store
